@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>简单动态规划：LIS、LCS、背包 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="P1020 导弹拦截 #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; const int N = 100010; int n = 0; int a[N], b[N], s[N], ls[N]; void add(int x, int v) { for(; x&lt;=n; x&#43;=x&amp;(-x)) s[x] = max(s[x], v); } int query(int x) { int ans = 0; for(; x&gt;0; x-=x&amp;(-x)) ans = max(ans, s[x]); return ans; } int main() { //freopen(&quot;p1020_1.in&quot;, &quot;r&quot;, stdin); for(; scanf(&quot;%d&quot;, a&#43;n&#43;1) != EOF; &#43;&#43;n, b[n]">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"简单动态规划：LIS、LCS、背包",
+      "item":"https://www.atsnow.tk/dp-linear/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/dp-linear/"
+    },
+    "headline": "简单动态规划：LIS、LCS、背包 | Eureka Demo","wordCount":  2436 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "P1020 导弹拦截 #include \u0026lt;stdio.h\u0026gt; #include \u0026lt;string.h\u0026gt; #include \u0026lt;iostream\u0026gt; #include \u0026lt;algorithm\u0026gt; using namespace std; const int N = 100010; int n = 0; int a[N], b[N], s[N], ls[N]; void add(int x, int v) { for(; x\u0026lt;=n; x\u002b=x\u0026amp;(-x)) s[x] = max(s[x], v); } int query(int x) { int ans = 0; for(; x\u0026gt;0; x-=x\u0026amp;(-x)) ans = max(ans, s[x]); return ans; } int main() { \/\/freopen(\u0026quot;p1020_1.in\u0026quot;, \u0026quot;r\u0026quot;, stdin); for(; scanf(\u0026quot;%d\u0026quot;, a\u002bn\u002b1) != EOF; \u002b\u002bn, b[n]"
+}
+</script><meta property="og:title" content="简单动态规划：LIS、LCS、背包 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/dp-linear/" />
+
+
+
+
+<meta property="og:description" content="P1020 导弹拦截 #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; const int N = 100010; int n = 0; int a[N], b[N], s[N], ls[N]; void add(int x, int v) { for(; x&lt;=n; x&#43;=x&amp;(-x)) s[x] = max(s[x], v); } int query(int x) { int ans = 0; for(; x&gt;0; x-=x&amp;(-x)) ans = max(ans, s[x]); return ans; } int main() { //freopen(&quot;p1020_1.in&quot;, &quot;r&quot;, stdin); for(; scanf(&quot;%d&quot;, a&#43;n&#43;1) != EOF; &#43;&#43;n, b[n]" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="DP" />
+
+<meta property="article:tag" content="DFS" />
+
+<meta property="article:tag" content="记忆化搜索" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-graph/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-series/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/noip-d2t1/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">简单动态规划：LIS、LCS、背包</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>5分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+        
+        <span>, </span>
+        <a href="https://www.atsnow.tk/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="hover:text-eureka">动态规划</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h3 id="p1020-导弹拦截">P1020 导弹拦截</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+const int N = 100010;
+int n = 0;
+
+int a[N], b[N], s[N], ls[N];
+void add(int x, int v) {
+	for(; x&lt;=n; x+=x&amp;(-x)) s[x] = max(s[x], v); 
+}
+
+int query(int x) {
+	int ans = 0;
+	for(; x&gt;0; x-=x&amp;(-x)) ans = max(ans, s[x]);
+	return ans;
+}
+int main() {
+	//freopen(&quot;p1020_1.in&quot;, &quot;r&quot;, stdin);
+	for(; scanf(&quot;%d&quot;, a+n+1) != EOF; ++n, b[n] = a[n]);
+	
+	sort(b+1, b+n+1);
+	int t = unique(b+1, b+n+1) - (b+1);
+	
+	for(int i=1; i&lt;=n; ++i) 
+		a[i] = lower_bound(b+1, b+t+1, a[i]) - b;
+	
+	int ans = 0;
+	for(int i=n; i&gt;0; --i) {
+		int q = query(a[i]) + 1;
+		add(a[i], q);
+		ans = max(ans, q);
+	}
+	printf(&quot;%d\n&quot;, ans);
+	
+	ans = 0;
+	memset(s, 0, sizeof s);
+	for(int i=1; i&lt;=n; ++i) {
+		int q = query(a[i]-1) + 1;
+		add(a[i], q);
+		ans = max(ans, q);
+	}
+	printf(&quot;%d\n&quot;, ans);
+	return 0;
+}
+
+</code></pre>
+<h3 id="p1439-模板最长公共子序列">P1439 【模板】最长公共子序列</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 100010;
+
+int n, b[N], p1[N], p2[N], s[N];
+
+int lowbit(int x) {
+	return x&amp;(-x);
+}
+void add(int x, int v) {
+	for(; x &lt;= n; x += lowbit(x)) s[x] = max(s[x], v);
+}
+int query(int x) {
+	int ans = 0;
+	for(; x &gt; 0; x -= lowbit(x)) ans = max(ans, s[x]);
+	return ans;
+}
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;n);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, p1+i);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, p2+i);
+	
+	for(int i=1; i&lt;=n; ++i) b[p1[i]] = i;
+	for(int i=1; i&lt;=n; ++i) p2[i] = b[p2[i]];
+	
+	int ans = 0;
+	for(int i=1; i&lt;=n; ++i) {
+		int q = query(p2[i]-1) + 1;
+		add(p2[i], q);
+		ans = max(ans, q);
+	}
+	
+	printf(&quot;%d&quot;, ans);
+	return 0;
+}
+
+</code></pre>
+<h3 id="p5665-csp-s-2019划分">P5665 [CSP-S-2019]划分</h3>
+<p>DP思路：先固定一个在后面的点，然后通过枚举前面的点来求答案。</p>
+<p>感觉好像很好想，又好像很难想到……不知道考场上会不会想到，总觉得大概率不会吧。</p>
+<p>分析了一下去年的题目，$100+35+10+24+24+0=193$ 的裸暴力分，去年已经是足够1=了</p>
+<p>不过今年限制只有高中的能参赛了。。。感觉压力好大</p>
+<p>不管了，努力吧</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 550000;
+typedef long long LL;
+
+LL ans = 0, a[N], s[N], last[N], dp[N];
+int n, type;
+int main() {
+	
+//	freopen(&quot;partition.in&quot;, &quot;r&quot;, stdin);
+//	freopen(&quot;partition.out&quot;, &quot;w&quot;, stdout);
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;type);
+	
+	if(type == 0) {
+		
+		for(int i=1; i&lt;=n; ++i) scanf(&quot;%lld&quot;, a+i);
+		for(int i=1; i&lt;=n; ++i) s[i] = s[i-1] + a[i];
+		memset(dp, 0x3f, sizeof dp); dp[0] = 0;
+		//dp[1] = s[1] * s[1]; last[1] = s[1];
+		for(int i=1; i&lt;=n; ++i) {
+			for(int j=0; j&lt;i; ++j) {
+				if(s[i] - s[j] &gt;= last[j] and dp[i] &gt; dp[j] + (s[i]-s[j])*(s[i]-s[j])) {
+					dp[i] = dp[j] + (s[i]-s[j])*(s[i]-s[j]); 
+					last[i] = s[i] - s[j];
+				}
+			}
+		}
+		
+		printf(&quot;%lld\n&quot;, dp[n]);
+	}
+	else printf(&quot;4972194419293431240859891640\n&quot;);
+	
+	return 0;
+}
+</code></pre>
+<h2 id="0-1-背包">0-1 背包</h2>
+<p>$$
+F(i,j)=
+\begin{cases}
+F(i-1,j)&amp; j \leq w_i\<br>
+\max{F(i-1,j),F(i-1,j-w_i)+v_i}&amp; j &gt; w_i
+\end{cases}
+$$</p>
+<p>注意二维转换成一维的时候，$j$ 要<b>从后向前</b>枚举，因为每次的新结果都是根据上一个结果来求得的，从后向前可避免重复取同一物品。</p>
+<h3 id="p2196-挖地雷">P2196 挖地雷</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+const int N = 30;
+
+typedef pair &lt;int, vector&lt;int&gt; &gt; piv;
+vector&lt;int&gt; g[N]; 
+
+int s1[N], n, w[N], in[N];
+vector&lt;int&gt; ss[N];
+
+piv ans;
+
+void outp(vector&lt;int&gt; &amp;ans) {
+	for(vector&lt;int&gt;::iterator it = ans.begin(); it != ans.end(); ++it) 
+		printf(&quot;%d &quot;, *it);
+	printf(&quot;\n&quot;);
+}
+
+piv dfs(int x, vector&lt;int&gt; s) {
+	if(s1[x]) {
+		return (piv){s1[x], ss[x]};
+	}
+	if(g[x].size() == 0) {
+		s1[x] = w[x]; ss[x].clear(); ss[x].push_back(x);
+		return (piv){s1[x], ss[x]};
+	}
+	s1[x] = w[x];
+	ss[x].push_back(x);
+	vector&lt;int&gt; st = ss[x];
+	
+	for(vector&lt;int&gt;::iterator it = g[x].begin(); it != g[x].end(); ++it) {
+		piv p = dfs(*it, s);
+		if(p.first + w[x] &gt; s1[x]) {
+			s1[x] = p.first + w[x];
+			ss[x] = st;
+			ss[x].insert(ss[x].end(), p.second.begin(), p.second.end());
+		}
+	}
+	return (piv){s1[x], ss[x]};
+}
+
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;n);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, w+i);
+	for(int i=1, a; i&lt;=n; ++i) {
+		for(int j=i+1; j&lt;=n; ++j) {
+			scanf(&quot;%d&quot;, &amp;a);
+			if(a) g[i].push_back(j), ++in[j];
+		}
+	}
+	
+	for(int i=1; i&lt;=n; ++i) {
+		if(!in[i]) {
+			piv p = dfs(i, ss[i]);
+			if(p.first &gt; ans.first) {
+				ans.first = p.first;
+				ans.second.clear();
+				ans.second.insert(ans.second.end(), p.second.begin(), p.second.end());
+			}
+		}
+	}
+	
+	outp(ans.second);
+	printf(&quot;%d&quot;, ans.first);
+	
+	return 0;
+}
+</code></pre>
+<h3 id="p1455-搭配购买">P1455 搭配购买</h3>
+<p>套一个并查集。</p>
+<p>Code：（2019.12.01）</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+
+const int N = 11000; 
+
+struct node {
+	int c, d;
+} val[N], tmp[N];
+
+int n, m, w, fa[N], list[N], dp[N], t, ans = 0;
+bool flag[N];
+
+int root(int x) {
+	return fa[x] == x ? x : fa[x] = root(fa[x]);
+}
+
+void operator +=(node &amp;A, node B) {
+	A.c += B.c, A.d += B.d;
+}
+
+int main() {
+	
+	scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;w);
+	
+	for(int i=1; i&lt;=n; ++i) fa[i] = i;
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d%d&quot;, &amp;val[i].c, &amp;val[i].d);
+	
+	for(int i=1; i&lt;=m; ++i) {
+		int u, v;
+		scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		int u1 = root(u), v1 = root(v);
+		fa[u1] = v1;
+	}
+	for(int i=1; i&lt;=n; ++i) root(i);
+	
+	for(int i=1; i&lt;=n; ++i) tmp[fa[i]] += val[i];
+	
+	memcpy(list+1, fa+1, n*4);
+	std::sort(list+1, list+n+1);
+	t = std::unique(list+1, list+n+1) - (list+1);
+	
+	for(int i=1; i&lt;=t; ++i) 
+		for(int j=w; j&gt;=tmp[list[i]].c; --j) 
+			dp[j] = std::max(dp[j], dp[j - tmp[list[i]].c] + tmp[list[i]].d);
+	
+	printf(&quot;%d\n&quot;, dp[w]);
+	
+	return 0;
+}
+</code></pre>
+<h3 id="p1164-小a点菜">P1164 小A点菜</h3>
+<p><del>这怎么会是橙题啊</del></p>
+<p>注意DP的初值 <code>dp[0] = 1</code>，因为需特别考虑过程中「从0开始买菜」的情况。</p>
+<p>循环中的i 表示已经考虑到了前i道菜。如果能买的起，就直接把 <code>dp[j-a[i]]</code> 转移过来，否则不变。</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+int dp[11000], n, m, a[110];
+
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, &amp;a[i]);
+	
+	dp[0] = 1;
+	for(int i=1; i&lt;=n; ++i) {
+		for(int j=m; j&gt;=a[i]; --j) {
+			dp[j] += dp[j-a[i]];
+		}
+	}
+	
+	printf(&quot;%d\n&quot;, dp[m]);
+	return 0;
+}
+</code></pre>
+<h2 id="完全背包">完全背包</h2>
+<p>与上面的01背包问题差别不大，只是多了一个条件：每个物品可以取无数次。</p>
+<p>方法很简单，只要 $j$ <b>从前向后</b>枚举即可。这样做其实是变相利用了它的后效性，使同一个物品可以被多次取到。</p>
+<h3 id="p1616-疯狂的采药">P1616 疯狂的采药</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+int t1, m, dp[int(1e7+10)], t[int(1e4+10)], v[int(1e4+10)];
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;t1, &amp;m);
+	for(int i=1; i&lt;=m; ++i) scanf(&quot;%d%d&quot;, t+i, v+i);
+	for(int i=1; i&lt;=t1; ++i) {
+		dp[i] = dp[i-1];
+		for(int j=1; j&lt;=m; ++j) 
+			if(i-t[j]&gt;=0) dp[i] = max(dp[i], dp[i-t[j]] + v[j]);
+	}
+	
+	printf(&quot;%d\n&quot;, dp[t1]);
+	return 0;
+}
+</code></pre>
+<h2 id="多重背包">多重背包</h2>
+<p>转成 01 背包处理</p>
+<p>首先找到最大的 $k$ 使得 $t=\sum_{i=0}^{k}2^i(t &lt; c_i)$，也就是找到最大的小于 $c_i$ 的二的各个次幂和。这样之后，我们就可以通过不重复且有选择地使用 $2^0$到 $2^k$ 来表示出 1到 t所有的数。但是剩下的呢？我们将剩下的 $c_i-t$ 单独分成一个物品，因为 1到 t都可以表示，那么有了这个 $c_i-t$ 物品，就可以表示出所有数了。</p>
+<p>例如，把 $21$ 分为 $[1,2,4,8,6]$，这样就可以从中不重复地选择来表示出 1到 $c_i$ 的所有数了。</p>
+<h3 id="p1776-宝物筛选">P1776 宝物筛选</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N = 110, M = 44000;
+
+int n, W, v[N], w[N], m[N], dp[M];
+int main() {
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;W);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d%d%d&quot;, v+i, w+i, m+i);
+	
+	for(int i=1; i&lt;=n; ++i) {
+		//1, 2, 4, 8, ... 2^k, m_i-2^(k+1)+1
+		int sum = 0;
+		for(int j=0; sum + (1&lt;&lt;j) &lt;= m[i]; ++j) {
+			sum += (1&lt;&lt;j);
+			for(int l=W; l&gt;=w[i]*(1&lt;&lt;j); --l) 
+				dp[l] = max(dp[l], dp[l-w[i]*(1&lt;&lt;j)] + v[i]*(1&lt;&lt;j));
+		}
+		for(int l=W; l&gt;=w[i]*(m[i] - sum); --l) 
+			dp[l] = max(dp[l], dp[l-w[i]*(m[i] - sum)] + v[i]*(m[i] - sum));
+	}
+	printf(&quot;%d\n&quot;, dp[W]); 
+	return 0;
+}
+</code></pre>
+<h3 id="p5020-noip-2018-tg货币系统">P5020 [NOIP-2018-TG]货币系统</h3>
+<p>感觉是道好题，从部分分一步一步优化就可以推出正解的。乍一看可能以为是个数论，其实并不是。</p>
+<h4 id="80分做法">80分做法:</h4>
+<p>考虑爆搜，枚举现有系统中的每个数能否被其他已选择的数表示出来。这里可以贪心的想，如果一个数能被另外几个数表示，那么删除它一定是更优解。</p>
+<p><code>dfs()</code> 部分可以换成背包，不过复杂度级别是差不多的。</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int N = 110;
+
+bool us[N];
+int T, n, maxv, t, a[N];
+bool dfs(int s, int x, int p) {
+	if(x &gt; n or s &gt; a[p]) return false;
+	if(x == p or us[x]) return dfs(s, x+1, p);
+	for(int i=0; i&lt;=maxv/a[x]; ++i) {
+		if(s+a[x]*i == a[p]) return true;
+		bool f = dfs(s+a[x]*i, x+1, p);
+		if(f) return true;
+	}
+	return false;
+}
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;T);
+	while(T--) {
+		scanf(&quot;%d&quot;, &amp;n);
+		
+		maxv = 0;
+		for(int i=1; i&lt;=n; ++i) {
+			scanf(&quot;%d&quot;, a+i);
+			maxv = max(maxv, a[i]);
+		}
+		
+		sort(a+1, a+n+1);
+		t = unique(a+1, a+n+1) - (a+1); int ans = t;
+		
+		memset(us, false, sizeof us);
+		for(int i=1; i&lt;=t; ++i) {
+			if(dfs(0,1,i)) {
+				us[i] = true;
+				--ans;
+			}
+		}
+		
+		printf(&quot;%d\n&quot;, ans);
+	}
+	return 0;
+}
+</code></pre>
+<h4 id="满分做法">满分做法：</h4>
+<p>其实在80分基础上再多想一步就够了：我们不用<b>枚举每个数的表示法</b>来判断可不可以删。直接对所有数dp，如果一个数<b>能用一种以上的方式表示出来</b>，那么就删掉它。显然删掉这个数是无后效的。</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int N = 110;
+
+bool us[N]; int dp[26000];
+int T, n, maxv, t, a[N];
+
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;T);
+	while(T--) {
+		scanf(&quot;%d&quot;, &amp;n);
+		
+		maxv = 0;
+		for(int i=1; i&lt;=n; ++i) {
+			scanf(&quot;%d&quot;, a+i);
+			maxv = max(maxv, a[i]);
+		}
+		 
+		sort(a+1, a+n+1);
+		t = unique(a+1, a+n+1) - (a+1); int ans = t;
+		
+		memset(dp, 0, sizeof dp);
+		dp[0] = 1;
+		for(int i=1; i&lt;=t; ++i) {
+			for(int j=a[i]; j&lt;=maxv; ++j) {
+				dp[j] += dp[j-a[i]];
+			}
+		}
+		for(int i=1; i&lt;=t; ++i) {
+			if(dp[a[i]] &gt; 1) --ans;  
+		}
+		
+		printf(&quot;%d\n&quot;, ans);
+	}
+	return 0;
+}
+</code></pre>
+<h2 id="分组背包">分组背包</h2>
+<p>在枚举主件的前提下枚举附件。</p>
+<h3 id="p1064httpswwwluogucomcnproblemp1064-金明的预算方案"><a href="https://www.luogu.com.cn/problem/P1064">P1064</a> 金明的预算方案</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int N = 33000, M = 65;
+
+typedef vector&lt;int&gt;::iterator IT;
+int n, m, p[M], v[M], dp[N];
+int g[M][2];
+vector&lt;int&gt; s;
+int main() {
+	
+	//freopen(&quot;P1064_5.in&quot;,&quot;r&quot;,stdin);
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	for(int i=1; i&lt;=m; ++i) { int q;
+		scanf(&quot;%d%d%d&quot;, &amp;v[i], &amp;p[i], &amp;q);
+		if(q == 0) s.push_back(i);
+		else if(g[q][0]) g[q][1] = i; else g[q][0] = i;
+	}
+	
+	for(IT it = s.begin(); it != s.end(); it++) {
+		int i = *it;
+		int a = g[i][0], b = g[i][1];
+		for(int j=n; j&gt;=v[i]; --j) {
+			dp[j] = max(dp[j], dp[j-v[i]] + v[i]*p[i]);
+			if(j-v[i]-v[a] &gt;= 0) dp[j] = max(dp[j], dp[j-v[i]-v[a]] + v[i]*p[i] + v[a]*p[a]);
+			if(j-v[i]-v[b] &gt;= 0) dp[j] = max(dp[j], dp[j-v[i]-v[b]] + v[i]*p[i] + v[b]*p[b]);
+			if(j-v[i]-v[a]-v[b] &gt;= 0) 
+				dp[j] = max(dp[j], dp[j-v[i]-v[a]-v[b]] 
+				+ v[i]*p[i] + v[a]*p[a] + v[b]*p[b]);
+		}
+	}
+	printf(&quot;%d\n&quot;, dp[n]);
+	return 0;
+}
+</code></pre>
+<h2 id="装满背包">装满背包</h2>
+<p>一种特殊情况。</p>
+<p>背包不一定装满时，$dp[j]$ 记录的是前i件物品放入空间为j的背包中的最大价值，要在一开始，让 $dp[]$ 中的每个值为 0。</p>
+<p>背包装满需要注意：</p>
+<p>要把 $f[j]$（表示刚好装满的最大价值）初始化为</p>
+<p>f[0] = 0; f[1..n] = -INF;</p>
+<p>这样就能使那些能够恰好装满背包的物品的值为正数，而那些不能恰好装满背包的物品的值就为负数，就容易区分了。</p>
+<p><code>dp[n](背包最多承重) == inf</code> 的话，说明装不满；如果装满的话，<code>dp[n]</code> 即为最高价值。</p>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/dp/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DP</a>
+    
+    <a href="https://www.atsnow.tk/tags/dfs/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DFS</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#记忆化搜索</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/she-jiang/" class="block">涉江</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/num-theory/" class="block">简单数论</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#p1020-导弹拦截">P1020 导弹拦截</a></li>
+        <li><a href="#p1439-模板最长公共子序列">P1439 【模板】最长公共子序列</a></li>
+        <li><a href="#p5665-csp-s-2019划分">P5665 [CSP-S-2019]划分</a></li>
+      </ul>
+    </li>
+    <li><a href="#0-1-背包">0-1 背包</a>
+      <ul>
+        <li><a href="#p2196-挖地雷">P2196 挖地雷</a></li>
+        <li><a href="#p1455-搭配购买">P1455 搭配购买</a></li>
+        <li><a href="#p1164-小a点菜">P1164 小A点菜</a></li>
+      </ul>
+    </li>
+    <li><a href="#完全背包">完全背包</a>
+      <ul>
+        <li><a href="#p1616-疯狂的采药">P1616 疯狂的采药</a></li>
+      </ul>
+    </li>
+    <li><a href="#多重背包">多重背包</a>
+      <ul>
+        <li><a href="#p1776-宝物筛选">P1776 宝物筛选</a></li>
+        <li><a href="#p5020-noip-2018-tg货币系统">P5020 [NOIP-2018-TG]货币系统</a>
+          <ul>
+            <li><a href="#80分做法">80分做法:</a></li>
+            <li><a href="#满分做法">满分做法：</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#分组背包">分组背包</a>
+      <ul>
+        <li><a href="#p1064httpswwwluogucomcnproblemp1064-金明的预算方案"><a href="https://www.luogu.com.cn/problem/P1064">P1064</a> 金明的预算方案</a></li>
+      </ul>
+    </li>
+    <li><a href="#装满背包">装满背包</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/dp-graph/">搜索与状压 DP</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-series/">高级动态规划：区间、树形</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/noip-d2t1/">D2T1：贪心、二分、并查集</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

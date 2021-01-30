@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>CF387D | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="二分图匹配应用。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"CF387D",
+      "item":"https://www.atsnow.tk/cf387d/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/cf387d/"
+    },
+    "headline": "CF387D | Eureka Demo","wordCount":  705 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "二分图匹配应用。"
+}
+</script><meta property="og:title" content="CF387D | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/cf387d/" />
+
+
+
+<meta property="og:description" content="二分图匹配应用。" />
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="二分图" />
+
+<meta property="article:tag" content="匹配" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/match-template/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/monotonous-queue/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-splay/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/minimum-cut/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">CF387D</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="cf387d">CF387D</h1>
+<h2 id="题意分析">题意分析</h2>
+<p>操作最少的次数，构成有趣图，注意无重边，有向边。</p>
+<ul>
+<li>操作分为加边和删边。</li>
+<li>有趣图定义
+<ul>
+<li>有一个中心，满足此点有自环，且与其他结点有双向边。</li>
+<li>除中心点外的结点，满足出度 = 入度 = 2。</li>
+</ul>
+</li>
+</ul>
+<h2 id="算法分析">算法分析</h2>
+<p>1、仔细分析有趣图的定义，发现如下性质：</p>
+<ul>
+<li>中心的边数为 $(n-1)\times 2+1$，也就是它与其他结点要有双向边再加自己的一个自环，无重边所以构造中心点时不可能做删除操作，只能加边或不操作。</li>
+<li>其他结点的出入度为 2，排除掉与中心点连接的双向边，其点的度一定为一进一出。</li>
+</ul>
+<p>2、如何判断结点的度满足一进一出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cf387d1.png" alt=""></p>
+<p>图一，图二都是满足结点度一进一出。所以 $n$ 个结点需要 $n$ 条相连边（首尾）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cf387d2.png" alt=""></p>
+<p>图三不满足，<b>只有两条相连边 $(e_1,e_2)$ 或者选择 $(e_1,e_3)$ 即有用边,还需要添加 $n-2$ 边有用边，同时还要减掉 1 条边，即总边数减去有用边，也就是要删除的无用边。</b></p>
+<blockquote>
+<p>方法1：拆点，一个点拆为进点和出点，建立二分图。</p>
+<p>​	<img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cf387d3.png" alt=""></p>
+<p>左边的点求匹配，最大匹配就是有用的边。</p>
+<p>方法2：直接将图看成二分图，利用有向边每个点都求匹配。</p>
+</blockquote>
+<p>3、枚举每个点做中心点。</p>
+<ul>
+<li>
+<p>中心点 V，计算维护中心需要的边 $(n-1)\times 2+1-\sum{V发出的边}$</p>
+</li>
+<li>
+<p>删除 V 点，也就是包含相应的边</p>
+</li>
+<li>
+<p>剩下的图，计算最大匹配，满足一进一出的边数需要的操作（添加边 + 删除边）。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 550, INF = INT_MAX;
+vector&lt;int&gt; g[N];
+int c, n, m;
+
+int tag = 0, vis[N], match[N];
+bool mp[N][N];
+
+bool dfs(int u) {
+	for(int i = 0; i &lt; g[u].size(); ++i) {
+		int v = g[u][i];
+		if(v == c) continue;
+		if(vis[v] == tag) continue;
+		vis[v] = tag;
+		if(match[v] == 0 or dfs(match[v])) {
+			match[v] = u;
+			return true;
+		}
+	}
+	return false;
+}
+
+int best = INF;
+
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	
+	int sum0 = 0;
+	for(int i=1, u, v; i&lt;=m; ++i) {
+		scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		g[u].push_back(v);
+		mp[u][v] = true;
+		++sum0;
+	}
+	
+	for(int i=1; i&lt;=n; ++i) {
+		memset(match, 0, sizeof match);
+		c = i;
+		int ans = 0;
+		int sum1 = 0;
+		for(int j=1; j&lt;=n; ++j) {
+			if(j == c) {
+				if(mp[c][c]) ++sum1;
+				continue;
+			}
+			if(mp[j][c]) ++sum1;
+			if(mp[c][j]) ++sum1;
+		}
+		ans += 2*(n-1) + 1 - sum1;
+		//printf(&quot;ans1 = %d\n&quot;, ans);
+		//printf(&quot;sum1 = %d\n&quot;, sum1);
+		int sum2 = 0;
+		for(int j=1; j&lt;=n; ++j) {
+			++tag;
+			if(j == c) continue;
+			if(dfs(j)) ++sum2;
+		}
+		
+		ans += sum0 - sum1 - sum2 + n-1 - sum2;
+		
+		best = min(best, ans);
+		//printf(&quot;ans2 = %d\n&quot;, ans);
+		//printf(&quot;sum2 = %d\n&quot;, sum2);
+	}
+	
+	printf(&quot;%d\n&quot;, best);
+	return 0;
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#二分图</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%8C%B9%E9%85%8D/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#匹配</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/stl-set/" class="block">C&#43;&#43; STL：SET &amp; MULTISET</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/noip-d2t1/" class="block">D2T1：贪心、二分、并查集</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#题意分析">题意分析</a></li>
+    <li><a href="#算法分析">算法分析</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/match-template/">匹配：模板</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/monotonous-queue/">单调队列</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-splay/">浅谈 Splay（一）</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/minimum-cut/">网络流：最小割</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

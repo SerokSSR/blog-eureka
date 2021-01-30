@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图论 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E5%9B%BE%E8%AE%BA/</link>
+    <description>Recent content in 图论 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/%E5%9B%BE%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图论</title>
+      <link>https://www.atsnow.tk/graph-theory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/graph-theory/</guid>
+      <description>图论 图论算法一般都是揉在一起的，很难单独把算法拆开讲，所以直接上题目吧。分类是大致分的，其实有很多是交叉的。 二叉树 二叉树的遍历有三种，分别为前序遍历，</description>
+    </item>
+    
+    <item>
+      <title>图论：LCA</title>
+      <link>https://www.atsnow.tk/graph-lca/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/graph-lca/</guid>
+      <description>LCA: Lowest common ancestor最近公共祖先 倍增求LCA 预处理向上跳2^k步的结果f[k][x] $O(n \log n)$ 求的时候先把两个点跳到一个深度，这里有一个特判，如果重合直</description>
+    </item>
+    
+    <item>
+      <title>图论：Tarjan</title>
+      <link>https://www.atsnow.tk/graph-tarjan/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/graph-tarjan/</guid>
+      <description>前置概念 时间戳：搜索时第几个搜索到这个点。如搜索顺序是1-&amp;gt;2-&amp;gt;3-&amp;gt;6，则6的时间戳为4 对于无向图 连通分量：对于图G来的一个子图</description>
+    </item>
+    
+    <item>
+      <title>搜索与状压 DP</title>
+      <link>https://www.atsnow.tk/dp-graph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/dp-graph/</guid>
+      <description>DFS 众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。 主要的搜索手段有： DFS/BFS爆搜 双向BF</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>网络流 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/categories/%E7%BD%91%E7%BB%9C%E6%B5%81/</link>
+    <description>Recent content in 网络流 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/categories/%E7%BD%91%E7%BB%9C%E6%B5%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>网络流：Dijkstra 求费用流</title>
+      <link>https://www.atsnow.tk/network-flow-dijkstra/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/network-flow-dijkstra/</guid>
+      <description>网络流：Dijkstra 求费用流 注：下文中的边权 $w$ 均表示费用 $f$。 Dijkstra 不能求有负权边的最短路，所以我们可以对网络 $G$ 中的每一个点设置一个势函数 $h(u)</description>
+    </item>
+    
+    <item>
+      <title>网络流：最大流</title>
+      <link>https://www.atsnow.tk/maximum-flow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/maximum-flow/</guid>
+      <description>网络流：最大流 EK 增广路方法是很多网络流算法的基础。其思路是每次找出一条从源到汇的能够增加流的路径，调整流值和残留网络 ，直到没有增广路为止。 EK 算法就是不</description>
+    </item>
+    
+    <item>
+      <title>网络流：最小割</title>
+      <link>https://www.atsnow.tk/minimum-cut/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/minimum-cut/</guid>
+      <description>网络流：最小割 将图 $G$ 分为 $A$ 和 $B$ 两个点集，$A$ 和 $B$ 之间的边的集合称为无向图的割集。带权图的割 (Cut) 就是割集中的边权之和。 S - T 最小割 特别地，对于一个网络，</description>
+    </item>
+    
+    <item>
+      <title>网络流：模板</title>
+      <link>https://www.atsnow.tk/network-flow-template/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/network-flow-template/</guid>
+      <description>网络流：模板 P3376 网络最大流（Dinic） #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; const int N = 11000, M = 110000; const int INF = 0x7fffffff; struct node { int u, v, w, next; } e[M &amp;lt;&amp;lt; 1]; int cur[N], h[N], tot; int dfn[N], ans, n, m, s, t; void add(int u, int v, int w) { e[tot]</description>
+    </item>
+    
+    <item>
+      <title>网络流：消圈算法</title>
+      <link>https://www.atsnow.tk/network-flow-deloop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/network-flow-deloop/</guid>
+      <description>网络流：消圈算法 注：下文中的权均表示费用。 消圈定理 在某个流 $f$ 中，如果其残余网络中没有负圈（剩余流量为 $0$ 的边视为不存在），那它一定是当前流量下的最小费用</description>
+    </item>
+    
+  </channel>
+</rss>

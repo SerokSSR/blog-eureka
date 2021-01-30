@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>图论 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="图论 图论算法一般都是揉在一起的，很难单独把算法拆开讲，所以直接上题目吧。分类是大致分的，其实有很多是交叉的。 二叉树 二叉树的遍历有三种，分别为前序遍历，">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"图论",
+      "item":"https://www.atsnow.tk/graph-theory/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/graph-theory/"
+    },
+    "headline": "图论 | Eureka Demo","wordCount":  2199 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "图论 图论算法一般都是揉在一起的，很难单独把算法拆开讲，所以直接上题目吧。分类是大致分的，其实有很多是交叉的。 二叉树 二叉树的遍历有三种，分别为前序遍历，"
+}
+</script><meta property="og:title" content="图论 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/graph-theory/" />
+
+
+
+
+<meta property="og:description" content="图论 图论算法一般都是揉在一起的，很难单独把算法拆开讲，所以直接上题目吧。分类是大致分的，其实有很多是交叉的。 二叉树 二叉树的遍历有三种，分别为前序遍历，" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="图论" />
+
+<meta property="article:tag" content="最短路" />
+
+<meta property="article:tag" content="算法" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-lca/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-tarjan/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-graph/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-dijkstra/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-template/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-deloop/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">图论</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>5分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="图论">图论</h1>
+<p>图论算法一般都是揉在一起的，很难单独把算法拆开讲，所以直接上题目吧。分类是大致分的，其实有很多是交叉的。</p>
+<h2 id="二叉树">二叉树</h2>
+<p>二叉树的遍历有三种，分别为前序遍历，中序遍历和后序遍历，并且给定其中的两种遍历能够求出另一种遍历 (必须已知中序遍历)。</p>
+<p>前序遍历：按 根 左 右 的顺序进行；</p>
+<p>中序遍历：按 左 根 右 的顺序进行；</p>
+<p>后序遍历：按 左 右 根 的顺序进行。</p>
+<h2 id="最短路--生成树">最短路 &amp; 生成树</h2>
+<h3 id="算法复杂度">算法复杂度</h3>
+<ul>
+<li>多源最短路Floyd：严格 $O(n^3)$</li>
+<li>单源最短路Dijkstra：</li>
+<li>
+<ul>
+<li>朴素：严格 $O(n^2)$</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>优先队列优化：均摊 $O((e+n) \log n)$</li>
+</ul>
+</li>
+<li>Bellman-Ford：</li>
+<li>
+<ul>
+<li><b>最多松弛 $n-1$ 次</b></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>严格 $O(ne)$</li>
+</ul>
+</li>
+<li>SPFA：</li>
+<li>
+<ul>
+<li>即队列优化Bellman-Ford</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>最坏 $O(ne)$，最好 $O(1)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="板子">板子</h3>
+<p>咕咕咕</p>
+<h3 id="如何卡掉-spfa">如何卡掉 SPFA</h3>
+<p>见 <a href="https://www.zhihu.com/question/292283275/answer/484871888">https://www.zhihu.com/question/292283275/answer/484871888</a></p>
+<h3 id="p1967-货车运输">P1967 货车运输</h3>
+<p>最大生成树，然后跑LCA</p>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+const int N = 1e4+10, M = 1e5+10, INF = 0x3f3f3f3f;
+
+struct node {
+	int id, u, v, w, next;
+} e[M], e1[M];
+int h[N], tot = 0, tot1 = 0, n, m;
+
+int fa[N][15], dep[N], dis[N][15];
+int vis[N];
+bool edg[M];
+
+void add(int u, int v, int w) {
+	e1[tot1] = e[tot] = {tot, u, v, w, h[u]}; h[u] = tot++; tot1++;
+	e[tot] = {tot, v, u, w, h[v]}; h[v] = tot++;
+}
+
+int bc[N];
+int root(int u) {
+	return bc[u] == u ? u : bc[u] = root(bc[u]);
+}
+
+bool cmp(node a, node b) {
+	return a.w &gt; b.w;
+}
+void dfs(int u, int f, int vi) {
+	vis[u] = vi;
+	for(int i = h[u]; i != -1; i = e[i].next) {
+		int v = e[i].v;
+		if(v == f) continue;
+		if(edg[i] or edg[i^1]) {
+			dep[v] = dep[u] + 1;
+			fa[v][0] = u;
+			dis[v][0] = e[i].w;
+			dfs(v, u, vi);
+		}
+	}
+}
+
+void lca(int x, int y) {
+	if(dep[x] &lt; dep[y]) swap(x, y);
+	int ans = INF;
+	int t = dep[x] - dep[y];
+	for(int i=14; i&gt;=0; --i) {
+		if(t &gt;= (1&lt;&lt;i)) {
+			ans = min(ans, dis[x][i]);
+			x = fa[x][i];
+			t -= (1&lt;&lt;i);
+		}
+	}
+	if(x == y) {
+		printf(&quot;%d\n&quot;, ans);
+		return;
+	}
+	for(int i=14; i&gt;=0; --i) {
+		if(fa[x][i] != fa[y][i]) {
+			ans = min(ans, dis[x][i]);
+			ans = min(ans, dis[y][i]);
+			x = fa[x][i]; y = fa[y][i];
+		}
+	}
+	//printf(&quot;lca:%d\n&quot;, fa[x][0]);
+	printf(&quot;%d\n&quot;, min(ans, min(dis[x][0], dis[y][0])));
+}
+int main() {
+    
+    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+    memset(h, -1, sizeof h);
+    for(int i=1; i&lt;=m; ++i) {
+		int u, v, w;
+        scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w);
+        add(u, v, w);
+    }
+    
+    sort(e1, e1+tot1, cmp);
+    for(int i=1; i&lt;=n; ++i) bc[i] = i;
+    for(int i=0; i&lt;tot1; ++i) {
+    	int u = e1[i].u, v = e1[i].v;
+    	int u1 = root(u), v1 = root(v);
+    	if(u1 != v1) {
+    		edg[e1[i].id] = true;
+    		bc[v1] = u1;
+		}
+	}
+	
+	for(int i=1; i&lt;=n; ++i) {
+		if(bc[i] == i) {
+			dfs(i, 0, i);
+			for(int j=0; j&lt;=14; ++j) {
+				fa[i][j] = i;
+				dis[i][j] = INF;
+			}
+		}
+	}
+	
+	for(int i=1; i&lt;=14; ++i) {
+		for(int j=1; j&lt;=n; ++j) {
+			fa[j][i] = fa[fa[j][i-1]][i-1];
+			dis[j][i] = min(dis[j][i-1], dis[fa[j][i-1]][i-1]);
+		}
+	}
+	
+	int query; scanf(&quot;%d&quot;, &amp;query);
+	for(int i=1; i&lt;=query; ++i) { 
+		int x, y; scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+		if(vis[x] != vis[y]) { printf(&quot;-1\n&quot;); continue; }
+		lca(x, y);
+	}
+	
+    return 0;
+} 
+</code></pre>
+<h3 id="p1073-最优贸易">P1073 最优贸易</h3>
+<p>分层图，最短路</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+using namespace std;
+
+const int N = 330000, M = 1650000;
+struct node {
+	int u, v, w, next;
+	node() {}
+	node(int _u, int _v, int _w, int _next): u(_u), v(_v), w(_w), next(_next) {}
+} e[M &lt;&lt; 1];
+int h[N], tot = 0;
+
+inline void add(int u, int v, int w = 0) {
+	e[tot] = node(u, v, w, h[u]);
+	h[u] = tot++;
+}
+
+int n, m, w[N]; bool vis[N]; int dis[N];
+int main() {
+	
+	#ifdef DEBUG
+	freopen(&quot;p1073_1.in&quot;, &quot;r&quot;, stdin);
+	#endif
+
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	for(int i=1; i&lt;=n; ++i) {
+		scanf(&quot;%d&quot;, &amp;w[i]);
+	}
+	memset(h, -1, sizeof h);
+	for(int i=1, x, y, z; i&lt;=m; ++i) {
+		scanf(&quot;%d%d%d&quot;, &amp;x, &amp;y, &amp;z);
+		if(z == 1) add(x, y), add(x+n, y+n), add(x+2*n, y+2*n);
+		else {
+			add(x, y), add(x+n, y+n), add(x+2*n, y+2*n);
+			swap(x, y);
+			add(x, y), add(x+n, y+n), add(x+2*n, y+2*n);
+		}
+	}
+	
+	for(int i=1; i&lt;=n; ++i) {
+		add(i+n, i, w[i]);
+		add(i, i+2*n, -w[i]);
+	}
+	
+	queue&lt;int&gt; q;
+	
+	memset(dis, 0x3f, sizeof dis);
+	q.push(n+1); vis[n+1] = true; dis[n+1] = 0;
+	while(!q.empty()) {
+		int u = q.front();
+		q.pop(); vis[u] = false;
+		for(int i=h[u]; i!=-1; i=e[i].next) {
+			int v=e[i].v;
+			if(dis[v] &gt; dis[u] + e[i].w) {
+				dis[v] = dis[u] + e[i].w;
+				if(!vis[v]) {
+					q.push(v);
+					vis[v] = true;
+				}
+			}
+		} 
+	}
+	
+	printf(&quot;%d\n&quot;, -dis[n*3]);
+	
+	return 0;
+}
+</code></pre>
+<h2 id="p1119-灾后重建">P1119 灾后重建</h2>
+<p><b>很重要的题目，考察了 Floyd的本质。</b></p>
+<h3 id="floyd">Floyd</h3>
+<p>用 $dis[k][i][j]$ 表示 i 和 j 之间可以通过编号为 $1\dots k$ 的节点的最短路径，显然，$dis[0][i][j]$ 就是原始邻接矩阵数据。</p>
+<p>状态转移方程：</p>
+<p>$$
+dis[k][i][j]=min(dis[k-1][i][j],dis[k-1][i][k]+dis[k-1][k][j])
+$$</p>
+<p>Floyd 的本质其实就是DP，只不过我们通常做题时利用了数据只会使用一次性的原理，把 dis 变成滚动数组，减少了一维，节省空间。</p>
+<p>更多请见 <a href="https://www.cnblogs.com/fangwencai/p/4784914.html">https://www.cnblogs.com/fangwencai/p/4784914.html</a>。</p>
+<pre><code class="language-cpp">//提前将邻接矩阵存在 dis 数组里，其他不连通的地方初始化成无穷大
+for(int k=1; k&lt;=n; ++k) //枚举中间点
+    for(int i=1; i&lt;=n; ++i) //枚举起点
+        if(i != k) //节省时间，如果一样就不往下走
+            for(int j=1; j&lt;=n; ++j) //枚举终点
+                if(i != j and j != k) //继续判断，如果有一样的就不往下走
+                    dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]); //状态转移方程，也就是所谓的松弛操作
+</code></pre>
+<p><b>只要我们能够利用 DP 特性，就能解决许多问题</b></p>
+<p>再回来看这道题，文中说每个村子是不同时间修好的，而每个节点都按顺序给出，这不就是恰好相当于 Floyd的中间点吗？我们可以把 k轮 DP分开做，每输入一个点，就用这个点当中转站把最短距离更新一遍，也就是跑一遍 DP。</p>
+<h3 id="code">Code:</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+const int N = 220;
+
+int t[N];
+
+struct query {
+	int id, x, y, t;
+} a[55000];
+
+int res[55000], n, m, dp[N][N];
+int main() {
+	
+	//freopen(&quot;P1119_2.in&quot;, &quot;r&quot;, stdin); 
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	
+	for(int i=1; i&lt;=n; ++i) {
+		scanf(&quot;%d&quot;, t+i);
+	}
+	t[n+1] = 0x3f3f3f3f;
+	
+	memset(dp, 0x3f, sizeof dp);
+	
+	for(int i=1; i&lt;=n; ++i) dp[i][i] = 0;
+	for(int i=1; i&lt;=m; ++i) { int u, v, w;
+		scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w); ++u, ++v;
+		dp[u][v] = dp[v][u] = w;
+	}
+	int q;
+	scanf(&quot;%d&quot;, &amp;q);
+	for(int i=1; i&lt;=q; ++i) {
+		scanf(&quot;%d%d%d&quot;, &amp;a[i].x, &amp;a[i].y, &amp;a[i].t);
+		a[i].id = i; ++a[i].x, ++a[i].y; 
+	}
+	
+	int cnt = 1;
+	for(; a[cnt].t &lt; t[1]; ++cnt) {
+		res[a[cnt].id] = -1; 
+	}
+	
+	for(int T=1; T&lt;=n; ++T) {
+		
+		for(int i=1; i&lt;=n; ++i) {
+			for(int j=1; j&lt;=n; ++j) {
+				dp[i][j] = min(dp[i][j], dp[i][T] + dp[T][j]);
+			}
+		}
+			
+		while(1) {
+			if(cnt &gt; q) break;
+			if(a[cnt].t &gt;= t[T] and a[cnt].t &lt; t[T+1]); else break;
+			if(a[cnt].x &gt; T or a[cnt].y &gt; T or dp[a[cnt].x][a[cnt].y] == 0x3f3f3f3f) {
+				res[a[cnt].id] = -1;
+			} else {
+				res[a[cnt].id] = dp[a[cnt].x][a[cnt].y];
+			}
+			++cnt;
+		}
+	}
+	
+	for(int i=1; i&lt;=q; ++i) printf(&quot;%d\n&quot;, res[i]);
+	return 0;
+}
+</code></pre>
+<h2 id="判负环">判负环</h2>
+<p>转自 @SingerCoder，%lgh</p>
+<p>注意一定要判入队次数而不是松弛次数。</p>
+<p>hack原理很简单：如果存在重边导致了多次松弛，那么对松弛次数的判断就会产生影响。解决方式就是判入队次数，虽然略慢，但是更稳。</p>
+<p>Update[2020.7.26]：在写差分约束的时候想用spfa判无解，然后经过一系列的思考就有了下面这组新的hack数据：</p>
+<pre><code>input:
+1
+4 6
+1 2 -3
+1 3 -2
+1 4 -1
+2 3 -6
+2 4 -5
+3 4 -4
+output:
+NO
+</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/cdn2/g21s.png" alt=""></p>
+<p>注意这组hack只对用链式前向星（而非vector）存边且判的是松弛次数（而非入队次数）的有效，而且该数据无重边无自环，比discuss里面的那个数据更有说服力。</p>
+<p>首先hack原理就是对n号节点进行n-1轮松弛，每轮都有 $x( x \in [1,n-1])$ 次松弛，这样就能产生 $n^2$ 级别的松弛次数。</p>
+<p>但是判入队次数就hack不掉了，每轮的第一次松弛会让n节点入队，但n节点只有在下一轮才会出队；因此本轮的其余所有松弛全部无法导致入队。</p>
+<h3 id="p3385-模板负环">P3385 [模板]负环</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 2e3 + 10, M = 6e3 + 10;
+struct node {
+	int u, v, w, next;
+} e[M];
+int h[N], tot = 0;
+int T, n, m;
+inline void add(int u, int v, int w) {
+	e[++tot] = {u, v, w, h[u]}; h[u] = tot;
+} 
+
+int dis[N], vis[N];
+bool inq[N];
+
+inline void spfa() {
+	
+	queue&lt;int&gt; q;
+	memset(dis, 0x3f, sizeof dis);
+	memset(vis, 0, sizeof vis);
+	memset(inq, false, sizeof inq);
+	
+	dis[1] = 0; q.push(1); inq[1] = true; ++vis[1];
+	while(!q.empty()) {
+		
+		int u = q.front(); q.pop(); inq[u] = false;//printf(&quot;%d\n&quot;, u);
+		for(int i = h[u]; i ; i = e[i].next) {
+			int v = e[i].v;
+			if(dis[v] &gt; dis[u] + e[i].w) {
+				dis[v] = dis[u] + e[i].w;
+				if(!inq[v]) {
+					inq[v] = true;
+					++vis[v];
+					if(vis[v] &gt; n-1) {
+						printf(&quot;YES\n&quot;);
+						return;
+					}
+					q.push(v);
+				}
+			}
+		}
+	}
+	printf(&quot;NO\n&quot;);
+}
+int main() {
+	
+	//freopen(&quot;P3385_2.in&quot;, &quot;r&quot;, stdin);
+	
+	scanf(&quot;%d&quot;, &amp;T);
+	while(T--) {
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		memset(h, 0, sizeof h); tot = 0;
+		for(int i=1; i&lt;=m; ++i) {
+			int u, v, w; scanf(&quot;%d%d%d&quot;, &amp;u, &amp;v, &amp;w);
+			if(w &gt;= 0) {
+				add(u, v, w);
+				add(v, u, w);
+			} else add(u, v, w);
+			//printf(&quot;%d &quot;, i);
+		}
+		spfa();
+	}
+	return 0;
+}
+</code></pre>
+<h2 id="基环树">基环树</h2>
+<p>n 个点 n 条边 只有一个环 枚举断边</p>
+<h3 id="p5022-noip2018tg旅行">P5022 [NOIp2018TG]旅行</h3>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E5%9B%BE%E8%AE%BA/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#图论</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#最短路</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/monotonous-queue/" class="block">单调队列</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/graph-lca/" class="block">图论：LCA</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#二叉树">二叉树</a></li>
+    <li><a href="#最短路--生成树">最短路 &amp; 生成树</a>
+      <ul>
+        <li><a href="#算法复杂度">算法复杂度</a></li>
+        <li><a href="#板子">板子</a></li>
+        <li><a href="#如何卡掉-spfa">如何卡掉 SPFA</a></li>
+        <li><a href="#p1967-货车运输">P1967 货车运输</a></li>
+        <li><a href="#p1073-最优贸易">P1073 最优贸易</a></li>
+      </ul>
+    </li>
+    <li><a href="#p1119-灾后重建">P1119 灾后重建</a>
+      <ul>
+        <li><a href="#floyd">Floyd</a></li>
+        <li><a href="#code">Code:</a></li>
+      </ul>
+    </li>
+    <li><a href="#判负环">判负环</a>
+      <ul>
+        <li><a href="#p3385-模板负环">P3385 [模板]负环</a></li>
+      </ul>
+    </li>
+    <li><a href="#基环树">基环树</a>
+      <ul>
+        <li><a href="#p5022-noip2018tg旅行">P5022 [NOIp2018TG]旅行</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/graph-lca/">图论：LCA</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-tarjan/">图论：Tarjan</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-graph/">搜索与状压 DP</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/network-flow-dijkstra/">网络流：Dijkstra 求费用流</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/network-flow-template/">网络流：模板</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/network-flow-deloop/">网络流：消圈算法</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

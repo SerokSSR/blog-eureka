@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>匹配 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E5%8C%B9%E9%85%8D/</link>
+    <description>Recent content in 匹配 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/%E5%8C%B9%E9%85%8D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CF387D</title>
+      <link>https://www.atsnow.tk/cf387d/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/cf387d/</guid>
+      <description>CF387D 题意分析 操作最少的次数，构成有趣图，注意无重边，有向边。 操作分为加边和删边。 有趣图定义 有一个中心，满足此点有自环，且与其他结点有双向边。 除中心点外的</description>
+    </item>
+    
+    <item>
+      <title>匹配：模板</title>
+      <link>https://www.atsnow.tk/match-template/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/match-template/</guid>
+      <description>匹配：模板 UOJ78 二分图最大匹配（DFS - KM） #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; const int N = 550; int match[N], g[N][N], vis[N], link[N]; int n, m, e, tag, ans = 0; bool dfs(int u) { for(int v=1; v&amp;lt;=m; ++v) { if(!g[u][v] or vis[v] == tag) continue; vis[v] = tag; if(!match[v] or dfs(match[v])) { match[v] = u; return true;</description>
+    </item>
+    
+  </channel>
+</rss>

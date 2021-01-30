@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>排序 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E6%8E%92%E5%BA%8F/</link>
+    <description>Recent content in 排序 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/%E6%8E%92%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; STL：SET &amp; MULTISET</title>
+      <link>https://www.atsnow.tk/stl-set/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/stl-set/</guid>
+      <description>C++ STL：SET &amp;amp; MULTISET 定义 方式 效果 set &amp;lt;数据类型名&amp;gt; 集合名; 先定义一个容器，容器内无任何元素 set &amp;lt;数据类型名&amp;gt; 集合名(另一个集合名)</description>
+    </item>
+    
+    <item>
+      <title>还在用 STL 排序？</title>
+      <link>https://www.atsnow.tk/still-using-stl-sort/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/still-using-stl-sort/</guid>
+      <description>还在用 STL 排序？ 使用 C 库函数 很多人都不知道的是，其实 C 语言也是自带排序函数的，就是位于 &amp;lt;stdlib.h&amp;gt; 库中的 qsort 函数声明： void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*)) 其中 base - 指向要排序的</description>
+    </item>
+    
+  </channel>
+</rss>

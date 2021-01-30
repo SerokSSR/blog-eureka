@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Butterfly：添加全局吸底 Aplayer 播放器 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="以下步骤在 Butterfly主题上可以正常生效。如果你使用的是其他主题，可以根据情况自行适配。 配置播放器 解决与 hexo-tag-aplayer 的兼容问题 如果你没有安装过 hexo-tag-aplayer 插件，请直">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Butterfly：添加全局吸底 Aplayer 播放器",
+      "item":"https://www.atsnow.tk/butterfly-aplayer/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/butterfly-aplayer/"
+    },
+    "headline": "Butterfly：添加全局吸底 Aplayer 播放器 | Eureka Demo","wordCount":  969 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "以下步骤在 Butterfly主题上可以正常生效。如果你使用的是其他主题，可以根据情况自行适配。 配置播放器 解决与 hexo-tag-aplayer 的兼容问题 如果你没有安装过 hexo-tag-aplayer 插件，请直"
+}
+</script><meta property="og:title" content="Butterfly：添加全局吸底 Aplayer 播放器 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/butterfly-aplayer/" />
+
+
+
+
+<meta property="og:description" content="以下步骤在 Butterfly主题上可以正常生效。如果你使用的是其他主题，可以根据情况自行适配。 配置播放器 解决与 hexo-tag-aplayer 的兼容问题 如果你没有安装过 hexo-tag-aplayer 插件，请直" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="Hexo" />
+
+<meta property="article:tag" content="Butterfly" />
+
+<meta property="article:tag" content="Aplayer" />
+
+<meta property="article:tag" content="博客" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/hexo-vercel/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/hexo-gulp-pwa/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/hexo-ssh-deploy/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Butterfly：添加全局吸底 Aplayer 播放器</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/hexo/" class="hover:text-eureka">Hexo</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <p>以下步骤在 Butterfly主题上可以正常生效。如果你使用的是其他主题，可以根据情况自行适配。</p>
+<h2 id="配置播放器">配置播放器</h2>
+<h3 id="解决与-hexo-tag-aplayer-的兼容问题">解决与 <code>hexo-tag-aplayer</code> 的兼容问题</h3>
+<p>如果你没有安装过 <code>hexo-tag-aplayer</code> 插件，请直接跳过该步骤。</p>
+<p>如果你安装过 <code>hexo-tag-aplayer</code>，请在 Hexo 的配置文件中修改以下设置：</p>
+<pre><code class="language-yml">aplayer:
+  meting: true
+  asset_inject: false
+</code></pre>
+<h3 id="开启主题的-aplayerinject-选项">开启主题的 aplayerInject 选项</h3>
+<p>在主题配置文件中，enable和per_page均设为true：</p>
+<pre><code class="language-yml"># Inject the css and script (aplayer/meting)
+aplayerInject:
+  enable: true
+  per_page: true
+</code></pre>
+<h3 id="插入-aplayer-代码">插入 Aplayer 代码</h3>
+<p>插入到主题配置文件的 <code>inject.bottom</code>。</p>
+<p>示例代码：</p>
+<pre><code class="language-yml">inject:
+  ...
+  bottom:
+    - &lt;div class=&quot;aplayer no-destroy&quot; data-id=&quot;000PeZCQ1i4XVs&quot; data-server=&quot;tencent&quot; data-type=&quot;artist&quot; data-fixed=&quot;true&quot; data-mini=&quot;true&quot; data-listFolded=&quot;false&quot; data-order=&quot;random&quot; data-preload=&quot;none&quot; data-autoplay=&quot;true&quot; muted&gt;&lt;/div&gt;
+</code></pre>
+<p>参数解释：</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>data-id</td>
+<td><strong>require</strong></td>
+<td>song id / playlist id / album id / search keyword</td>
+</tr>
+<tr>
+<td>data-server</td>
+<td><strong>require</strong></td>
+<td>music platform: <code>netease</code>, <code>tencent</code>, <code>kugou</code>, <code>xiami</code>, <code>baidu</code></td>
+</tr>
+<tr>
+<td>data-type</td>
+<td><strong>require</strong></td>
+<td><code>song</code>, <code>playlist</code>, <code>album</code>, <code>search</code>, <code>artist</code></td>
+</tr>
+<tr>
+<td>data-autoplay</td>
+<td><code>false</code></td>
+<td>audio autoplay</td>
+</tr>
+<tr>
+<td>data-theme</td>
+<td><code>#2980b9</code></td>
+<td>main color</td>
+</tr>
+<tr>
+<td>data-loop</td>
+<td><code>all</code></td>
+<td>player loop play, values: ‘all’, ‘one’, ‘none’</td>
+</tr>
+<tr>
+<td>data-order</td>
+<td><code>list</code></td>
+<td>player play order, values: ‘list’, ‘random’</td>
+</tr>
+<tr>
+<td>data-preload</td>
+<td><code>auto</code></td>
+<td>values: ‘none’, ‘metadata’, ‘auto’</td>
+</tr>
+<tr>
+<td>data-volume</td>
+<td><code>0.7</code></td>
+<td>default volume, notice that player will remember user setting, default volume will not work after user set volume themselves</td>
+</tr>
+<tr>
+<td>data-mutex</td>
+<td><code>true</code></td>
+<td>prevent to play multiple player at the same time, pause other players when this player start play</td>
+</tr>
+<tr>
+<td>data-lrctype</td>
+<td><code>0</code></td>
+<td>歌词来源方式，一般不更改</td>
+</tr>
+<tr>
+<td>data-listfolded</td>
+<td><code>false</code></td>
+<td>indicate whether list(<b>指播放列表，不是播放器</b>) should folded at first</td>
+</tr>
+<tr>
+<td>data-listmaxheight</td>
+<td><code>340px</code></td>
+<td>list max height</td>
+</tr>
+<tr>
+<td>data-storagename</td>
+<td><code>metingjs</code></td>
+<td>localStorage key that store player setting</td>
+</tr>
+</tbody></table>
+<p>:::warning</p>
+<p>注意：</p>
+<ul>
+<li><code>data-id</code>、<code>data-server</code> 和 <code>data-type</code> 必须配置</li>
+<li><code>data-fixed</code> 和 <code>data-mini</code> 参数不要更改
+:::</li>
+</ul>
+<p>运行Hexo就可以看到网页左下角出现了Aplayer。</p>
+<p>如果你想切换页面时音乐不中断，请把主题配置文件的 <code>pjax</code> 设为 <code>true</code>。</p>
+<h2 id="ui-调整">UI 调整</h2>
+<h3 id="调整右下角回到顶部等按钮">调整右下角回到顶部等按钮</h3>
+<p>按照上面的步骤设置完成后，浏览器左下角会出现 Aplayer。在手机端浏览博客时，如果展开播放器，会将右下角按钮遮住。</p>
+<p>在Butterfly配置文件中，调整 <code>rightside-bottom</code> 选项：</p>
+<pre><code class="language-yml"># the position of bottom right button; default unit: px (右下角按鈕距離底部的距離，默認單位為 px)
+rightside-bottom: 80px
+</code></pre>
+<h3 id="调整-toc-目录按钮">调整 TOC 目录按钮</h3>
+<p>打开文章页面时，你会发现打开 Toc 目录的按钮被遮挡了。我们需要修改 CSS 来改变按钮的位置。</p>
+<p>请在主题配置文件中，将这段代码添加到 inject 去：</p>
+<pre><code class="language-yml">inject:
+  head:
+    - '&lt;style type=&quot;text/css&quot;&gt;#toggle-sidebar {bottom: 80px}&lt;/style&gt;'
+</code></pre>
+<h3 id="调整-aplayer-收回方式">调整 Aplayer 收回方式</h3>
+<p>如果你觉得Aplayer占地太大，影响正常阅读，可以设置Aplayer收回时将音乐Cover也隐藏掉，只留下右侧的箭头栏。</p>
+<p>请在主题配置文件中，将这段代码添加到 inject 去：</p>
+<pre><code class="language-yml">inject:
+  head:
+    - '&lt;style type=&quot;text/css&quot;&gt;.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body{left:-66px!important}.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover{left:0!important}&lt;/style&gt;'
+</code></pre>
+<h3 id="调整-aplayer-歌词显示">调整 APlayer 歌词显示</h3>
+<p>Aplayer的歌词默认在底部正中显示，也会遮挡一些内容。当然我们可以通过调整相应内容高度的方式来解决，但是如果可以设置歌词默认不显示，效果可能会更好。</p>
+<p>解决方案：修改Butterfly配置文件中的 <code>CDN.meting_js</code> 配置，将CDN链接替换即可。</p>
+<pre><code class="language-diff">CDN:
+  ...
+  # aplayer
+  aplayer_css: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css
+  aplayer_js: https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js
+- meting_js: https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js
++ meting_js: https://cdn.jsdelivr.net/gh/SerokSSR/cdn/meting.min.js
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/hexo/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#Hexo</a>
+    
+    <a href="https://www.atsnow.tk/tags/butterfly/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#Butterfly</a>
+    
+    <a href="https://www.atsnow.tk/tags/aplayer/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#Aplayer</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%8D%9A%E5%AE%A2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#博客</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/markdown-syntax-guide/" class="block">Markdown Syntax Guide</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/stl-set/" class="block">C&#43;&#43; STL：SET &amp; MULTISET</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置播放器">配置播放器</a>
+      <ul>
+        <li><a href="#解决与-hexo-tag-aplayer-的兼容问题">解决与 <code>hexo-tag-aplayer</code> 的兼容问题</a></li>
+        <li><a href="#开启主题的-aplayerinject-选项">开启主题的 aplayerInject 选项</a></li>
+        <li><a href="#插入-aplayer-代码">插入 Aplayer 代码</a></li>
+      </ul>
+    </li>
+    <li><a href="#ui-调整">UI 调整</a>
+      <ul>
+        <li><a href="#调整右下角回到顶部等按钮">调整右下角回到顶部等按钮</a></li>
+        <li><a href="#调整-toc-目录按钮">调整 TOC 目录按钮</a></li>
+        <li><a href="#调整-aplayer-收回方式">调整 Aplayer 收回方式</a></li>
+        <li><a href="#调整-aplayer-歌词显示">调整 APlayer 歌词显示</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/hexo-vercel/">Hexo：将你的博客部署到 Vercel</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/hexo-gulp-pwa/">Hexo：为你的博客配置 PWA</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/hexo-ssh-deploy/">Hexo：配置 SSH 公钥部署</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

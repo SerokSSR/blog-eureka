@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DFS on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/dfs/</link>
+    <description>Recent content in DFS on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/dfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>D2T1：贪心、二分、并查集</title>
+      <link>https://www.atsnow.tk/noip-d2t1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/noip-d2t1/</guid>
+      <description>常见的贪心技巧 货币使用问题： 尽可能少用，那么我们就先拿面值最大的，依次往下走，最后拿光了即可。 区间调度问题： 工作时间不能重叠，在可选工作中，每次都选取</description>
+    </item>
+    
+    <item>
+      <title>搜索与状压 DP</title>
+      <link>https://www.atsnow.tk/dp-graph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/dp-graph/</guid>
+      <description>DFS 众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。 主要的搜索手段有： DFS/BFS爆搜 双向BF</description>
+    </item>
+    
+    <item>
+      <title>简单动态规划：LIS、LCS、背包</title>
+      <link>https://www.atsnow.tk/dp-linear/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/dp-linear/</guid>
+      <description>P1020 导弹拦截 #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; using namespace std; const int N = 100010; int n = 0; int a[N], b[N], s[N], ls[N]; void add(int x, int v) { for(; x&amp;lt;=n; x+=x&amp;amp;(-x)) s[x] = max(s[x], v); } int query(int x) { int ans = 0; for(; x&amp;gt;0; x-=x&amp;amp;(-x)) ans = max(ans, s[x]); return ans; } int main() { //freopen(&amp;quot;p1020_1.in&amp;quot;, &amp;quot;r&amp;quot;, stdin); for(; scanf(&amp;quot;%d&amp;quot;, a+n+1) != EOF; ++n, b[n]</description>
+    </item>
+    
+    <item>
+      <title>高级动态规划：区间、树形</title>
+      <link>https://www.atsnow.tk/dp-series/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/dp-series/</guid>
+      <description>区间 DP P1880 [NOI1995]石子合并 #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; const int N = 220; int ans, dp[N][N], n, a[N], s[N]; int main() { scanf(&amp;quot;%d&amp;quot;, &amp;amp;n); for(int i=1; i&amp;lt;=n; ++i) { scanf(&amp;quot;%d&amp;quot;, a+i); s[i] = s[i-1] + a[i]; } for(int i=1; i&amp;lt;=n; ++i) { s[i+n] = s[i+n-1] + a[i]; } memset(dp, 0x3f, sizeof dp); for(int i=1; i&amp;lt;=2*n; ++i) dp[i][i]</description>
+    </item>
+    
+  </channel>
+</rss>

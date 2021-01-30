@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>博客 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in 博客 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.atsnow.tk/tags/%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hexo：将你的博客部署到 Vercel</title>
+      <link>https://www.atsnow.tk/hexo-vercel/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/hexo-vercel/</guid>
+      <description>写在前面 近些日子，静态网站的热度又渐渐高了起来。相比于动态网站，静态网站具有轻量、无需服务器、利于SEO、速度快等特点，非常适合个人博客。再加上Hex</description>
+    </item>
+    
+    <item>
+      <title>Butterfly：添加全局吸底 Aplayer 播放器</title>
+      <link>https://www.atsnow.tk/butterfly-aplayer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/butterfly-aplayer/</guid>
+      <description>以下步骤在 Butterfly主题上可以正常生效。如果你使用的是其他主题，可以根据情况自行适配。 配置播放器 解决与 hexo-tag-aplayer 的兼容问题 如果你没有安装过 hexo-tag-aplayer 插件，请直</description>
+    </item>
+    
+    <item>
+      <title>Hexo：为你的博客配置 PWA</title>
+      <link>https://www.atsnow.tk/hexo-gulp-pwa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/hexo-gulp-pwa/</guid>
+      <description>Hexo：使用 Gulp 为你的博客配置 PWA 使用这个方法之前，请先卸载掉其它的 PWA 插件，并安装 Gulp 和 WorkBox。 npm install gulp-cli -g npm install workbox-build gulp --save-dev 本文参考利用 Workbox 实现博客的 PWA和</description>
+    </item>
+    
+    <item>
+      <title>Hexo：配置 SSH 公钥部署</title>
+      <link>https://www.atsnow.tk/hexo-ssh-deploy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/hexo-ssh-deploy/</guid>
+      <description>Hexo：配置 SSH 公钥部署 配置 git 使用 ssh 密钥 git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（</description>
+    </item>
+    
+  </channel>
+</rss>

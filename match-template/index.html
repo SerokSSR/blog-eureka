@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>匹配：模板 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="匹配：模板 UOJ78 二分图最大匹配（DFS - KM） #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &lt;iostream&gt; using namespace std; const int N = 550; int match[N], g[N][N], vis[N], link[N]; int n, m, e, tag, ans = 0; bool dfs(int u) { for(int v=1; v&lt;=m; &#43;&#43;v) { if(!g[u][v] or vis[v] == tag) continue; vis[v] = tag; if(!match[v] or dfs(match[v])) { match[v] = u; return true;">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"匹配：模板",
+      "item":"https://www.atsnow.tk/match-template/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/match-template/"
+    },
+    "headline": "匹配：模板 | Eureka Demo","wordCount":  657 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "匹配：模板 UOJ78 二分图最大匹配（DFS - KM） #include \u0026lt;stdio.h\u0026gt; #include \u0026lt;string.h\u0026gt; #include \u0026lt;iostream\u0026gt; using namespace std; const int N = 550; int match[N], g[N][N], vis[N], link[N]; int n, m, e, tag, ans = 0; bool dfs(int u) { for(int v=1; v\u0026lt;=m; \u002b\u002bv) { if(!g[u][v] or vis[v] == tag) continue; vis[v] = tag; if(!match[v] or dfs(match[v])) { match[v] = u; return true;"
+}
+</script><meta property="og:title" content="匹配：模板 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/match-template/" />
+
+
+
+
+<meta property="og:description" content="匹配：模板 UOJ78 二分图最大匹配（DFS - KM） #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &lt;iostream&gt; using namespace std; const int N = 550; int match[N], g[N][N], vis[N], link[N]; int n, m, e, tag, ans = 0; bool dfs(int u) { for(int v=1; v&lt;=m; &#43;&#43;v) { if(!g[u][v] or vis[v] == tag) continue; vis[v] = tag; if(!match[v] or dfs(match[v])) { match[v] = u; return true;" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="二分图" />
+
+<meta property="article:tag" content="匹配" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/cf387d/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/noip-d2t1/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/monotonous-queue/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">匹配：模板</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="匹配模板">匹配：模板</h1>
+<h2 id="uoj78-二分图最大匹配dfs---km">UOJ78 二分图最大匹配（DFS - KM）</h2>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 550;
+
+int match[N], g[N][N], vis[N], link[N];
+int n, m, e, tag, ans = 0;
+
+bool dfs(int u) {
+	
+	for(int v=1; v&lt;=m; ++v) {
+		if(!g[u][v] or vis[v] == tag) continue;
+		vis[v] = tag;
+		if(!match[v] or dfs(match[v])) {
+			match[v] = u;
+			return true;
+		}
+	}
+	return false;
+}
+int main() {
+	
+	scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;e);
+	for(int i=1, u, v; i&lt;=e; ++i) {
+		scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		g[u][v] = true;
+	}
+	
+	for(int i=1; i&lt;=n; ++i) {
+		tag = i;
+		if(dfs(i)) ++ans;
+	}
+	
+	printf(&quot;%d\n&quot;, ans);
+	for(int i=1; i&lt;=m; ++i) link[match[i]] = i;
+	
+	for(int i=1; i&lt;=n; ++i) printf(&quot;%d &quot;, link[i]);
+	
+	return 0;
+}
+
+</code></pre>
+<h2 id="uoj79-一般图最大匹配带花树">UOJ79 一般图最大匹配（带花树）</h2>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 550;
+int fa[N], match[N], pre[N], vis[N];
+int tag = 0, n, m, ans = 0;
+int flag[N];
+bool g[N][N];
+queue&lt;int&gt; q;
+
+void clear(queue&lt;int&gt; &amp;q) {
+	queue&lt;int&gt; empty;
+	swap(q, empty);
+}
+int belong(int u) {
+	return fa[u] == u ? u : fa[u] = belong(fa[u]);
+}
+
+void path(int u) {
+	while(u) {
+		int v = match[pre[u]];
+		match[u] = pre[u];
+		match[pre[u]] = u;
+		u = v;
+	}
+}
+int lca(int u, int v) {
+	++tag;
+	u = belong(u);
+	v = belong(v);
+	while(vis[u] != tag) {
+		vis[u] = tag;
+		u = belong(pre[match[u]]);
+		if(v) swap(u, v);
+	}
+	return u;
+}
+void connect(int u, int v, int root) {
+	while(belong(u) != root) {
+		pre[u] = v;
+		v = match[u];
+		if(flag[v] == 2) {
+			q.push(v);
+			flag[v] = 1;
+		}
+		if(belong(u) == u) fa[u] = root;
+		if(belong(v) == v) fa[v] = root;
+		u = pre[v];
+	}
+}
+bool bfs(int u) {
+	
+	memset(flag, 0, sizeof flag);
+	memset(pre, 0, sizeof pre);
+	for(int i=1; i&lt;=n; ++i) fa[i] = i;
+	
+	clear(q);
+	q.push(u);
+	flag[u] = 1;
+	
+	while(!q.empty()) {
+		u = q.front();
+		q.pop();
+		for(int v=1; v&lt;=n; ++v) {
+			if(!g[u][v]) continue;
+			if(flag[v] == 0) {
+				pre[v] = u;
+				if(match[v] == 0) {
+					path(v);
+					return true;
+				}
+				q.push(match[v]);
+				flag[v] = 2;
+				flag[match[v]] = 1;
+			} else {
+				if(flag[v] == 2) continue;
+				if(belong(u) == belong(v)) continue;
+				int root = lca(u, v);
+				connect(u, v, root);
+				connect(v, u, root);
+			}
+		}
+	}
+	return false;
+}
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	for(int i=1, u, v; i&lt;=m; ++i) {
+		scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		g[u][v] = g[v][u] = true;
+	}
+	
+	for(int i=1; i&lt;=n; ++i) 
+		if(match[i] == 0 and bfs(i)) ++ans;
+	
+	printf(&quot;%d\n&quot;, ans);
+	for(int i=1; i&lt;=n; ++i) printf(&quot;%d &quot;, match[i]);
+	 
+	return 0;
+}
+</code></pre>
+<h2 id="uoj80-二分图最大权匹配bfs---km">UOJ80 二分图最大权匹配（BFS - KM）</h2>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+typedef long long LL;
+const int N = 440;
+const LL INF = 0x3f3f3f3f3f3f3f3f;
+
+bool vis[N];
+int pre[N], link[N], res[N];
+int n, m, e;
+LL g[N][N], lx[N], ly[N], d[N], ans = 0;
+
+void bfs(int k) {
+	
+	int x, y = 0;
+	LL min1 = INF, delta;
+	memset(vis, false, sizeof vis);
+	memset(pre, 0, sizeof pre);
+	memset(d, 0x3f, sizeof d);
+	link[y] = k;
+	
+	do {
+		x = link[y], delta = INF, vis[y] = true;
+		for(int i=1; i&lt;=m; ++i) {
+			if(!vis[i]) {
+				if(d[i] &gt; lx[x] + ly[i] - g[x][i]) {
+					d[i] = lx[x] + ly[i] - g[x][i];
+					pre[i] = y;
+				}
+				if(delta &gt; d[i]) delta = d[i], min1 = i;
+            }
+        }
+        for(int i=0; i&lt;=m; ++i)
+        	if(vis[i]) lx[link[i]] -= delta, ly[i] += delta;
+        	else d[i] -= delta;
+        y = min1;
+    } while(link[y]);
+    while(y) link[y] = link[pre[y]], y = pre[y];
+}
+
+int main() {
+	
+	scanf(&quot;%d%d%d&quot;, &amp;n, &amp;m, &amp;e);
+	m = max(n, m);
+	for(int i=1; i&lt;=e; ++i) {
+		int u, v; LL w;
+		scanf(&quot;%d%d%lld&quot;, &amp;u, &amp;v, &amp;w);
+		g[u][v] = w;
+		lx[u] = max(lx[u], w);
+	}
+	
+	for(int i=1; i&lt;=n; ++i) bfs(i);
+	
+	for(int i=1; i&lt;=m; ++i) {
+		if(!g[link[i]][i]) continue;
+		ans += g[link[i]][i];
+		res[link[i]] = i;
+	}
+	printf(&quot;%lld\n&quot;, ans);
+	for(int i=1; i&lt;=n; ++i) printf(&quot;%d &quot;, res[i]);
+	
+	return 0;
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#二分图</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%8C%B9%E9%85%8D/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#匹配</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/ning-mei/" class="block">凝眉（第一稿）</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/monotonous-queue/" class="block">单调队列</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#uoj78-二分图最大匹配dfs---km">UOJ78 二分图最大匹配（DFS - KM）</a></li>
+    <li><a href="#uoj79-一般图最大匹配带花树">UOJ79 一般图最大匹配（带花树）</a></li>
+    <li><a href="#uoj80-二分图最大权匹配bfs---km">UOJ80 二分图最大权匹配（BFS - KM）</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/cf387d/">CF387D</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/noip-d2t1/">D2T1：贪心、二分、并查集</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/monotonous-queue/">单调队列</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

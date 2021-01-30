@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数论 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E6%95%B0%E8%AE%BA/</link>
+    <description>Recent content in 数论 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/%E6%95%B0%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数论：不定方程整数解</title>
+      <link>https://www.atsnow.tk/num-exgcd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/num-exgcd/</guid>
+      <description>扩展欧几里得 求不定 $ax+by=c$ 的所有整数解。 判断该方程是否有解 裴蜀定理：设 $\gcd(a, b) = d$，则对任意整数x, y，有d|(ax + by) 成立； 特别地，一定存在x, y 满足ax +</description>
+    </item>
+    
+    <item>
+      <title>简单数论</title>
+      <link>https://www.atsnow.tk/num-theory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/num-theory/</guid>
+      <description>简单数论 一点都不简单 欧几里得算法 又称辗转相除法 迭代求两数 gcd 的做法 由 $(a, b) = (a, ka + b)$ 的性质：$\gcd(a, b) = \gcd(b, a\bmod b)$ 容易证明这么做的复杂度是 $O(\log n)$ 注意：$</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>简单数论 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="简单数论 一点都不简单 欧几里得算法 又称辗转相除法 迭代求两数 gcd 的做法 由 $(a, b) = (a, ka &#43; b)$ 的性质：$\gcd(a, b) = \gcd(b, a\bmod b)$ 容易证明这么做的复杂度是 $O(\log n)$ 注意：$">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"简单数论",
+      "item":"https://www.atsnow.tk/num-theory/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/num-theory/"
+    },
+    "headline": "简单数论 | Eureka Demo","wordCount":  1257 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "简单数论 一点都不简单 欧几里得算法 又称辗转相除法 迭代求两数 gcd 的做法 由 $(a, b) = (a, ka \u002b b)$ 的性质：$\\gcd(a, b) = \\gcd(b, a\\bmod b)$ 容易证明这么做的复杂度是 $O(\\log n)$ 注意：$"
+}
+</script><meta property="og:title" content="简单数论 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/num-theory/" />
+
+
+
+
+<meta property="og:description" content="简单数论 一点都不简单 欧几里得算法 又称辗转相除法 迭代求两数 gcd 的做法 由 $(a, b) = (a, ka &#43; b)$ 的性质：$\gcd(a, b) = \gcd(b, a\bmod b)$ 容易证明这么做的复杂度是 $O(\log n)$ 注意：$" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="数论" />
+
+<meta property="article:tag" content="算法" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/num-exgcd/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/cf387d/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/noip-d2t1/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">简单数论</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="简单数论">简单数论</h1>
+<p>一点都不简单</p>
+<h2 id="欧几里得算法">欧几里得算法</h2>
+<p>又称辗转相除法
+迭代求两数 gcd 的做法
+由 $(a, b) = (a, ka + b)$ 的性质：$\gcd(a, b) = \gcd(b, a\bmod b)$
+容易证明这么做的复杂度是 $O(\log n)$</p>
+<p>注意：$\gcd(0, a) = a$</p>
+<h2 id="裴蜀定理">裴蜀定理</h2>
+<p>设(a, b) = d，则对任意整数x, y，有d|(ax + by) 成立；
+特别地，一定存在x, y 满足ax + by = d
+等价的表述：不定方程ax + by = c(a, b, c 为整数) 有解的充要条件为(a, b)|c
+推论：a, b 互质等价于ax + by = 1 有解</p>
+<h3 id="p4549-模板裴蜀定理">P4549 【模板】裴蜀定理</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int main() {
+	
+	int n; scanf(&quot;%d&quot;, &amp;n); int a; scanf(&quot;%d&quot;, &amp;a); int g = a; 
+	for(int i=2; i&lt;=n; ++i) {
+		scanf(&quot;%d&quot;, &amp;a); if(a == 0) continue;
+		if(a &lt; 0) a = -a;
+		g = __gcd(g, a);
+	}
+	printf(&quot;%d\n&quot;, g);
+	return 0;
+}
+</code></pre>
+<h2 id="扩展欧几里得">扩展欧几里得</h2>
+<p>考虑如何求得ax + by = d 的一个解。这里d = (a, b)
+考虑使用欧几里德算法的思想，令a = bq + r，其中r = a mod b；
+递归求出bx + ry = d 的一个解。
+设求出bx + ry = d 的一个解为x = x0, y = y0，考虑如何把它变形成ax + by = d 的解。
+将a = bq + r 代入ax + by = d，化简得b(xq + y) + rx = d
+我们令xq + y = x0, x = y0，则上式成立
+故x = y0, y = x0 - y0q 为ax + by = d 的解
+边界情况：b = 0 时，令x = 1, y = 0</p>
+<h3 id="p1082-同余方程">P1082 同余方程</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+typedef long long ll;
+typedef pair&lt;ll, ll&gt; pll;
+ll a, b;
+pll exgcd(ll a, ll b) {
+	if(b == 0) return {1,0};
+	pll p = exgcd(b, a%b);
+	return {p.second, p.first-a/b*p.second};
+}
+
+int main() {
+	
+	scanf(&quot;%lld%lld&quot;, &amp;a, &amp;b);
+	ll x = exgcd(a,b).first;
+	while(x &lt; 0) x+=b;
+	while(x-b &gt; 0) x-=b;
+	printf(&quot;%lld\n&quot;, x);
+	return 0;
+}
+</code></pre>
+<h2 id="求不定方程所有解">求不定方程所有解</h2>
+<p>怎么求ax + by = c 的所有解？
+先用exgcd 求出任意一个解x = x0, y = y0
+再求出ax + by = 0 的最小的解
+x = dx = b/(a, b), y = dy = -a/(a, b)
+所有解就是x = x0 + kdx, y = y0 + kdy, k 取任意整数</p>
+<h2 id="逆元">逆元</h2>
+<p>若ax ≡ 1(mod b)，则称x 是a 关于模b 的逆元，
+常记做a−1。
+回忆同余的性质。上式等价于ax + by = 1
+如何求逆元？等价于解方程ax + by = 1
+因此逆元不一定存在：
+存在的充要条件为(a, b) = 1
+推论：p 是质数，p 不整除a，则a 模p 的逆元存在。</p>
+<p>结论：在[0, b) 的范围内，a 关于模b 的逆元(若存在) 是唯一的。
+证明：
+反证法，若a 有两个逆元0 &lt; x1 &lt; x2 &lt; b，
+即ax1 ≡ ax2 ≡ 1(mod b)，
+那么有b|a(x2 − x1) 成立
+又由于(a, b) = 1，因此b|(x2 − x1)。
+其中0 &lt; x2 − x1 &lt; b，产生了矛盾。</p>
+<h3 id="p3811-模板乘法逆元">P3811 【模板】乘法逆元</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+long long inv[int(3e6+10)]; int n, p;
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;p);
+	inv[1] = 1;
+	for(int i=2; i&lt;=n; ++i) {
+		inv[i] = p-(p/i)*inv[p%i]%p;
+	}
+	for(int i=1; i&lt;=n; ++i) printf(&quot;%lld\n&quot;, inv[i]);
+	return 0;
+}
+</code></pre>
+<h2 id="中国剩余定理">中国剩余定理</h2>
+<p>咕咕咕</p>
+<h2 id="杂题">杂题</h2>
+<p>如果看第一眼不会做，一般就得想一年的题，如臭名昭著的<strong>小凯类数论问题</strong></p>
+<h3 id="p4942-小凯的数字">P4942 小凯的数字</h3>
+<p>我们知道，一个数模9等于他的各位和模9。这一结论可以推广至将某数截成若干节，每段合起来也符合这个规律，题目便转化成求sigma [l..r]。用 <code>__int128</code> 也可以过，但是更好是把除以二挪到前面，使其符合乘法取模分配率，注意奇偶。</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+typedef long long LL;
+
+int a[15], b[15];
+
+int main() {
+	int q; scanf(&quot;%d&quot;, &amp;q);
+	for(int i=1; i&lt;=q; ++i) { LL l, r;
+		scanf(&quot;%lld%lld&quot;, &amp;l, &amp;r);
+		if((r-l+1) %2 == 0) printf(&quot;%lld\n&quot;, ((r-l+1)/2)%9*(l+r)%9);
+		else printf(&quot;%lld\n&quot;, ((l+r)/2)%9*(r-l+1)%9);
+	}
+	return 0;
+}
+</code></pre>
+<h2 id="整除分块">整除分块</h2>
+<p>与其说整除分块是一种算法，不如说它是一个技巧。有时我们需要计算这样的式子：</p>
+<p>$$
+\sum_{i=1}^n f(i)\lfloor\frac{n}{i}\rfloor
+$$</p>
+<p>根据经验，我们发现 $\lfloor\frac{n}{i}\rfloor$ 只有 $O(\sqrt n)$ 种取值。对于每种取值，i 都会有一个连续的范围。假设函数 f 的前缀和可以预处理后快速求出，那么我们可以枚举 $\lfloor\frac{n}{i}\rfloor$ 的所有取值，并和 f 的连续一段的和相乘。具体可以见代码：</p>
+<pre><code class="language-cpp">// s[i] 为函数 f(i) 的前缀和 
+int ans = 0;
+for(int i=1, j; i&lt;=n; i=j+1) {
+    j = n/(n/i);
+    ans += (s[j]-s[i-1])*(n/i);
+}
+printf(&quot;%d\n&quot;, ans);
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E6%95%B0%E8%AE%BA/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#数论</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/dp-linear/" class="block">简单动态规划：LIS、LCS、背包</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/network-flow-dijkstra/" class="block">网络流：Dijkstra 求费用流</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#欧几里得算法">欧几里得算法</a></li>
+    <li><a href="#裴蜀定理">裴蜀定理</a>
+      <ul>
+        <li><a href="#p4549-模板裴蜀定理">P4549 【模板】裴蜀定理</a></li>
+      </ul>
+    </li>
+    <li><a href="#扩展欧几里得">扩展欧几里得</a>
+      <ul>
+        <li><a href="#p1082-同余方程">P1082 同余方程</a></li>
+      </ul>
+    </li>
+    <li><a href="#求不定方程所有解">求不定方程所有解</a></li>
+    <li><a href="#逆元">逆元</a>
+      <ul>
+        <li><a href="#p3811-模板乘法逆元">P3811 【模板】乘法逆元</a></li>
+      </ul>
+    </li>
+    <li><a href="#中国剩余定理">中国剩余定理</a></li>
+    <li><a href="#杂题">杂题</a>
+      <ul>
+        <li><a href="#p4942-小凯的数字">P4942 小凯的数字</a></li>
+      </ul>
+    </li>
+    <li><a href="#整除分块">整除分块</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/num-exgcd/">数论：不定方程整数解</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/cf387d/">CF387D</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/noip-d2t1/">D2T1：贪心、二分、并查集</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

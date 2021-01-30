@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>最小割 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/</link>
+    <description>Recent content in 最小割 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>网络流：最小割</title>
+      <link>https://www.atsnow.tk/minimum-cut/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/minimum-cut/</guid>
+      <description>网络流：最小割 将图 $G$ 分为 $A$ 和 $B$ 两个点集，$A$ 和 $B$ 之间的边的集合称为无向图的割集。带权图的割 (Cut) 就是割集中的边权之和。 S - T 最小割 特别地，对于一个网络，</description>
+    </item>
+    
+  </channel>
+</rss>

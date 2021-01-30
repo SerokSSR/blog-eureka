@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LCA on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/lca/</link>
+    <description>Recent content in LCA on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/lca/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图论：LCA</title>
+      <link>https://www.atsnow.tk/graph-lca/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/graph-lca/</guid>
+      <description>LCA: Lowest common ancestor最近公共祖先 倍增求LCA 预处理向上跳2^k步的结果f[k][x] $O(n \log n)$ 求的时候先把两个点跳到一个深度，这里有一个特判，如果重合直</description>
+    </item>
+    
+  </channel>
+</rss>

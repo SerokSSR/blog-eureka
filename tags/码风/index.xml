@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>码风 on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/%E7%A0%81%E9%A3%8E/</link>
+    <description>Recent content in 码风 on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://www.atsnow.tk/tags/%E7%A0%81%E9%A3%8E/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About CODESTYLE</title>
+      <link>https://www.atsnow.tk/about-codestyle/</link>
+      <pubDate>Tue, 21 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/about-codestyle/</guid>
+      <description>commit 命名规范 feat: 一个新功能 fix: 一个 bug 修复 docs: 仅仅修改了文档，比如 README, CHANGELOG, CONTRIBUTE 等 style: 不影响代码逻辑的修改，比如空格、格式缩进、删除分号等 refactor: 代码重构 perf: 提升性能的改动 test: 增加</description>
+    </item>
+    
+  </channel>
+</rss>

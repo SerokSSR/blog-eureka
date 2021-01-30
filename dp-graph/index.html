@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>搜索与状压 DP | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="DFS 众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。 主要的搜索手段有： DFS/BFS爆搜 双向BF">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"搜索与状压 DP",
+      "item":"https://www.atsnow.tk/dp-graph/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/dp-graph/"
+    },
+    "headline": "搜索与状压 DP | Eureka Demo","wordCount":  1756 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "DFS 众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。 主要的搜索手段有： DFS\/BFS爆搜 双向BF"
+}
+</script><meta property="og:title" content="搜索与状压 DP | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/dp-graph/" />
+
+
+
+
+<meta property="og:description" content="DFS 众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。 主要的搜索手段有： DFS/BFS爆搜 双向BF" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="DP" />
+
+<meta property="article:tag" content="图论" />
+
+<meta property="article:tag" content="树" />
+
+<meta property="article:tag" content="DFS" />
+
+<meta property="article:tag" content="记忆化搜索" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-series/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-linear/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/noip-d2t1/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-theory/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-lca/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-tarjan/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">搜索与状压 DP</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>4分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+        
+        <span>, </span>
+        <a href="https://www.atsnow.tk/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="hover:text-eureka">动态规划</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h2 id="dfs">DFS</h2>
+<p>众所周知，搜索和DP是不分家的，几乎所有的DP都可以转化为搜索。当想不出正解时，DFS也是骗分的好手段。</p>
+<p>主要的搜索手段有：</p>
+<ol>
+<li>DFS/BFS爆搜</li>
+<li>双向BFS</li>
+<li>启发式搜索（又称A*）</li>
+<li>迭代加深搜索</li>
+<li>IDA*（迭代加深+启发式）</li>
+<li>记忆化搜索</li>
+<li>剪枝</li>
+</ol>
+<p>重要程度：1,7,6 - 4,3 - 5,2。</p>
+<p><del>下面这几道题都是去年当时不会做的，结果一年过去了，还是不会，呜呜呜</del></p>
+<h3 id="p3956-棋盘">P3956 棋盘</h3>
+<p>NOIp 2017 普及</p>
+<p>搜索裸题</p>
+<p>显然不可以用vis[]来判断，因此<strong>会搜到重复的状态</strong>，考虑记忆化搜索。</p>
+<p>网上的题解好像都没有正确性证明，可能觉得太显然了？可我就在这里卡了好久啊 /kk</p>
+<ul>
+<li>如果当前格子本来就有颜色，那么魔法一定可用</li>
+<li>如果当前格子原本没有颜色，那么只要搜到这个格子，魔法其实<strong>只有一种情况</strong>就是不可用</li>
+</ul>
+<p>而且记搜的时候注意剪枝条件一定要**写到上界！**比如下面这段代码，<code>f &gt;= mem[x][y]</code> 如果改成 <code>f &gt; mem[x][y]</code>，100直接变70……</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N = 110;
+int m, n, c[N][N], mem[N][N];
+int d[4][2] = {{0,1},{0,-1},{-1,0},{1,0}};
+int ans = 0x3f3f3f3f;
+
+void dfs(int x, int y, int f, int cc) {
+	
+	//f: 代价
+	//cc != -1 不能用魔法, 此处改成的颜色
+	//cc == -1 可以
+	
+	if(f &gt;= mem[x][y] || f &gt;= mem[m][m]) return;
+	mem[x][y] = f;
+	
+	if(x == m &amp;&amp; y == m) return;
+	
+	for(int i=0; i&lt;4; ++i) {
+		int xx=x+d[i][0],yy=y+d[i][1];
+		if(xx&lt;1||xx&gt;m||yy&lt;1||yy&gt;m) continue;
+		if(cc!=-1&amp;&amp;c[xx][yy]==cc||cc==-1&amp;&amp;c[xx][yy]==c[x][y]) {
+			dfs(xx, yy, f, -1);			
+		} else if(cc!=-1&amp;&amp;c[xx][yy]!=cc&amp;&amp;c[xx][yy]!=-1||cc==-1&amp;&amp;c[xx][yy]!=c[x][y]&amp;&amp;c[xx][yy]!=-1) {
+			dfs(xx, yy, f+1, -1); 
+		} else if(cc==-1&amp;&amp;c[xx][yy]==-1) {
+			dfs(xx, yy, f+2, c[x][y]);
+		}
+	}
+}
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;m, &amp;n);
+	
+	memset(c, -1, sizeof c);
+	memset(mem, 0x3f, sizeof mem);
+	
+	for(int i=1; i&lt;=n; ++i) { 
+		int x, y, cc; scanf(&quot;%d%d%d&quot;, &amp;x, &amp;y, &amp;cc); 
+		c[x][y] = cc;
+	}
+	
+	dfs(1, 1, 0, -1);
+	
+	printf(&quot;%d\n&quot;, mem[m][m] == 0x3f3f3f3f ? -1 : mem[m][m]);
+	return 0;
+}
+</code></pre>
+<h3 id="p3959-宝藏">P3959 宝藏</h3>
+<p>NOIp 2017 提高</p>
+<p><del>去年做的时候就连70分做法都不会。一年过去了，还是不会，呜呜呜</del></p>
+<p>（下面为自己开脱）</p>
+<p>这道题的部分分思想其实还挺重要的。</p>
+<p>我们知道，一般的DFS就是在找出很多单条路径的过程中，获得最优答案。形式也很固定，一般形如：</p>
+<pre><code class="language-cpp">void/int dfs(int u, int sum, int cnt, ...)
+</code></pre>
+<p><b>而这道题不然。</b></p>
+<p>从样例二就可以看出，最终合法方案呈<b>树形</b>，而不是单条<b>路径</b>。一上来可能会想到生成树，但是假掉了。、</p>
+<p>反例：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/images/2020/08/10/d6de2d2b502ed79d81abe9ebb16d40d1.png" alt=""></p>
+<p>这张图从1号点开始的Prim便是错的。</p>
+<p>如果跑Prim，从1号点开始的话，我们会先访问2，（此时花费为1），然后我们会访问3，此时花费为3 * 2，然后由于只有4号点未访问，这时3号的访问顺序为3，访问4号的代价是3 * 100 = 300，显然这种做法不是最优的，正确的答案应该是211（从1号点开始的最小花费为211）。</p>
+<p>虽然直接跑Prim是错的，但是Prim的思想仍然重要，这一思想也在最短路等很多算法中有应用：用更新过的点去更新其他点。</p>
+<p>我们设计一个<b>不基于点</b>的dfs函数，参数只需传递代价，每次迭代，先枚举访问过的点，再枚举一个未访问且未开通路径的点，进行松弛，将代价持续传递下去。计算代价需要记录点的深度，也要通过父节点传递下去。</p>
+<p>代码不长，也不难写，说是白给70分，其实思路并不好想（虽然比正解 $O(n^2 \times 3^n)$ 状压好写多了）。毕竟是紫题嘛，像我这种菜鸡也不打算AC，能骗多少是多少。</p>
+<p>总的来说，这道题的关键还是在于生成树，需要认真看题，熟练运用普及算法（</p>
+<h4 id="code">Code:</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+const int INF = 0x7f7f7f7f;
+
+int min(int a, int b) { return a &lt; b ? a : b; }
+
+int map[20][20];
+int dep[20], best, n, m, num;
+bool vis[20];
+
+void dfs(int x) {
+	if(x &gt;= best) return; //注意这里的剪枝！
+	if(num == 0) {
+		best = x;
+		return;
+	}
+	for(int i=1; i&lt;=n; ++i) {
+		if(vis[i]) {
+			for(int j=1; j&lt;=n; ++j) {
+				if(!vis[j] and map[i][j] &lt; INF) {
+					vis[j] = true; --num;
+					dep[j] = dep[i] + 1;
+					dfs(x + map[i][j] * dep[j]);
+					vis[j] = false; ++num;
+				}
+			}
+		}
+	}
+}
+
+int main() {
+	memset(map, 0x7f, sizeof map);
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	
+	for(int i=1; i&lt;=m; ++i) {
+		int x, y, v;
+		scanf(&quot;%d%d%d&quot;, &amp;x, &amp;y, &amp;v);
+		map[x][y] = map[y][x] = min(map[x][y], v);
+	}
+	
+	best = INF; num = n;
+	for(int i=1; i&lt;=n; ++i) {
+		vis[i] = true; --num;
+		dep[i] = 0;
+		dfs(0);
+		vis[i] = false; ++num;
+	}
+	
+	printf(&quot;%d\n&quot;, best);
+	
+	return 0;
+}
+</code></pre>
+<h2 id="状压-dp">状压 DP</h2>
+<h3 id="常用操作">常用操作</h3>
+<p>设全集为 $x$</p>
+<ul>
+<li><code>for(int y = x; y; y = (y-1) &amp; x)</code>：枚举 x 的每个子集</li>
+<li><code>x^y</code>：x 集合中刨去 y</li>
+<li><code>x&amp;y == y</code>：y 是 x 的子集</li>
+</ul>
+<h3 id="p3052-usaco12marcows-in-a-skyscraper-g">P3052 [USACO12MAR]Cows in a Skyscraper G</h3>
+<pre><code class="language-cpp">
+</code></pre>
+<h3 id="p3959-宝藏-1">P3959 宝藏</h3>
+<p>对就是刚才那道题。</p>
+<p>令 $f_{j,i,S}$ 表示从起点到准备向外发边的点 $i$ 的距离为 $j$，准备要把集合 $S$ 中的点挖通</p>
+<p>转移时，枚举从节点 $i$ 打出的边 i-&gt;k，再枚举从 $k$ 要打通的子集 $S_2\subset S$，那么</p>
+<p>$$
+f_{j, i, S} = \min_{k \in S_2 \subset S} (d[i][k] * (j + 1) + f_{j + 1, k, S_2 - {k}} + f_{j, i, S - S_2})
+$$</p>
+<p>转移顺序一定要想好。</p>
+<p>最后取所有 $f_{0,i,U-{i}}$ 的最小值即可，其中 $U$ 是全集。</p>
+<p>核心代码</p>
+<pre><code class="language-cpp">    //预处理集合中1的个数
+    for (int i = 1; i &lt; mx; ++i)
+        sz[i] = sz[i &amp; (i - 1)] + 1;
+
+    //预处理 lowbit
+    for (int i = 0; i &lt; n; ++i)
+        mn[1 &lt;&lt; i] = i;
+    for (int i = 1; i &lt; mx; ++i)
+        mn[i] = mn[i &amp; -i];
+
+    for (int i = 0; i &lt; n; ++i)
+        f[n - 1][i][0] = 0; //初值
+    for (int j = n - 2; j &gt;= 0; --j) { //距离
+        for (int i = 0; i &lt; n; ++i) { //发边点
+            f[j][i][0] = 0; //初值
+
+            for (int S = 1; S &lt; (1 &lt;&lt; n); ++S) {
+                if (((~S &gt;&gt; i) &amp; 1) //i不在集合S里
+                        &amp;&amp; sz[S] &lt;= n - j - 1)  //不会多挖
+                    for (int S2 = S; S2; S2 = (S2 - 1) &amp; S) { //S的每个子集
+                        int tmp = S2;
+
+                        for (int k = mn[tmp]; tmp; k = mn[tmp &amp;= ~(1 &lt;&lt; k)]) //S2里的每个点
+                            if (mp[i][k] ^ INF) //存在待挖的边
+                                f[j][i][S] = min(f[j][i][S], f[j + 1][k][S2 &amp; ~(1 &lt;&lt; k)] + f[j][i][S &amp; ~S2] + mp[i][k] * (j + 1));
+                    }
+            }
+        }
+    }
+
+    int ans = INF;
+
+    for (int i = 0; i &lt; n; ++i)
+        ans = std::min(ans, f[0][i][(mx - 1) &amp; ~(1 &lt;&lt; i)]);
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/dp/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DP</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%9B%BE%E8%AE%BA/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#图论</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E6%A0%91/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#树</a>
+    
+    <a href="https://www.atsnow.tk/tags/dfs/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DFS</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#记忆化搜索</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/mabaoguo/" class="block">年轻人不讲武德</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/num-exgcd/" class="block">数论：不定方程整数解</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#dfs">DFS</a>
+      <ul>
+        <li><a href="#p3956-棋盘">P3956 棋盘</a></li>
+        <li><a href="#p3959-宝藏">P3959 宝藏</a>
+          <ul>
+            <li><a href="#code">Code:</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#状压-dp">状压 DP</a>
+      <ul>
+        <li><a href="#常用操作">常用操作</a></li>
+        <li><a href="#p3052-usaco12marcows-in-a-skyscraper-g">P3052 [USACO12MAR]Cows in a Skyscraper G</a></li>
+        <li><a href="#p3959-宝藏-1">P3959 宝藏</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/dp-series/">高级动态规划：区间、树形</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-linear/">简单动态规划：LIS、LCS、背包</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/noip-d2t1/">D2T1：贪心、二分、并查集</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-theory/">图论</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-lca/">图论：LCA</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-tarjan/">图论：Tarjan</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

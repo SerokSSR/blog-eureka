@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>网络流：最小割 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="S - T 最小割 &amp; 最大流最小割定理 &amp; 最大权闭合子图 &amp; 无向图全局最小割。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"网络流：最小割",
+      "item":"https://www.atsnow.tk/minimum-cut/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/minimum-cut/"
+    },
+    "headline": "网络流：最小割 | Eureka Demo","wordCount":  2799 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "S - T 最小割 \u0026 最大流最小割定理 \u0026 最大权闭合子图 \u0026 无向图全局最小割。"
+}
+</script><meta property="og:title" content="网络流：最小割 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/minimum-cut/" />
+
+
+
+<meta property="og:description" content="S - T 最小割 &amp; 最大流最小割定理 &amp; 最大权闭合子图 &amp; 无向图全局最小割。" />
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="网络流" />
+
+<meta property="article:tag" content="最小割" />
+
+<meta property="article:tag" content="算法" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/cf387d/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/monotonous-queue/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-splay/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-dijkstra/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">网络流：最小割</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>6分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+        
+        <span>, </span>
+        <a href="https://www.atsnow.tk/categories/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="hover:text-eureka">网络流</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="网络流最小割">网络流：最小割</h1>
+<p>将图 $G$ 分为 $A$ 和 $B$ 两个点集，$A$ 和 $B$ 之间的边的集合称为无向图的<b>割集</b>。带权图的<b>割 (Cut) </b>就是割集中的边权之和。</p>
+<h2 id="s---t-最小割">S - T 最小割</h2>
+<p>特别地，对于一个网络，在满足 $源点 s \in 点集{S}, 汇点 t \in 点集{T}(S\cap T= \varnothing)$ 的情况下，<b>从 S 到 T 的边的权值和</b>被称为 <b>S 到 T 的割</b>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cut1.png" alt="img"></p>
+<p>通俗地说，如果把你家和自来水厂之间的水管网络砍断了一些，那么自来水厂无论怎么放水，水都无法到达你们家，自然就停水了，砍掉的水管就是割。</p>
+<p>砍水管的人自然希望花的力气越小越好。在所有割中，权值和最小的称为<strong>最小割</strong>。对于一个给定的 S - T 网络，如何求出它的最小割呢？</p>
+<h2 id="最大流最小割定理">最大流最小割定理</h2>
+<p><b>网络的最大流等于最小割。</b></p>
+<p>这个定理看起来很简单，但是真去思考的话其实是很麻烦的。</p>
+<h3 id="证明-step-1任意一个流都小于等于任意一个割">证明 Step 1：任意一个流都小于等于任意一个割</h3>
+<p>自来水公司随便给你家通点水，构成一个流，随便砍几刀砍出一个割，那么由于容量限制，每一根的被砍的水管子流出的水流量都小于管子的容量。每一根被砍的水管的水本来都要到你家的，现在流到外面，加起来得到的流量还是等于原来的流。而管子的容量加起来就是割，所以流小于等于割。</p>
+<p>由于上面的流和割都是任意构造的，所以<strong>任意一个流小于任意一个割</strong>，即
+$$
+\forall F \leqslant \forall C
+$$</p>
+<h3 id="step-2构造出一个流使它等于一个割">Step 2：构造出一个流，使它等于一个割</h3>
+<p>当达到最大流时，根据增广路定理，残留网络中 s 到 t 已经没有通路了。因此，若把残余网络中 s 能到的的点的集合设为 S，不能到的点集为 T ，构造出一个割集 $C[点集S,点集T]$，所有由 S 发往 T 的边必然满流。并且，这些满流边的流量和就是当前的流，即<strong>最大流</strong>。把这些满流边作为割，就构造出了一个<strong>和最大流相等的割</strong>。</p>
+<h3 id="step-3最大流等于最小割">Step 3：最大流等于最小割</h3>
+<p>设上一步构造出流和割分别为 $F_m$ 和 $C_m$。</p>
+<p>又 $\forall F \leqslant \forall C$</p>
+<p>$\therefore \forall F \leqslant F_m=C_m \leqslant \forall C$。</p>
+<h3 id="网络流等价定理">网络流等价定理</h3>
+<p>（这个名字是我自己想的</p>
+<p>综合最大流最小割定理和增广路定理，可以得到这样的结论：</p>
+<blockquote>
+<p>对于一个网络流图 $G=(V,E)$，其中有源点 $s$ 和汇点 $t$ ，那么下面三个条件是等价的：</p>
+<ol>
+<li>
+<p>流 $f$ 是图 $G$ 的最大流；</p>
+</li>
+<li>
+<p>残留网络 $G$ 不存在增广路；</p>
+</li>
+<li>
+<p>在 $G$ 中必存在一个割 $C[S,T]$，使得 $f=C[S,T]$。</p>
+</li>
+</ol>
+</blockquote>
+<p><del>读者自证不难</del></p>
+<h3 id="证明-1--2即增广路定理">证明 1 =&gt; 2（即增广路定理）</h3>
+<p>利用反证法，假设流 $f$ 是图 $G$ 的最大流，但是残留网络中还存在有增广路 $p$，其流量为 $f_p$，则有流 $f'=f+f_p&gt;f$。这与 $f$ 是最大流产生矛盾。</p>
+<h3 id="证明-2--3即最大流最小割定理">证明 2 =&gt; 3（即最大流最小割定理）</h3>
+<p>总结一下上面的证明。</p>
+<p>假设残留网络 $G_f$ 不存在增广路，所以在残留网络 $G_f$ 中不存在路径从 $s$ 到达 $t$。我们定义 $S$ 集合为当前残留网络中 $s$ 能够到达的点，同时定义 $T=V-S$，此时构成一个割 $C(S,T)$。</p>
+<p>且 $u∈S,v∈T$，有 $f(u,v)=c(u,v)$。若 $f(u,v)&lt;c(u,v)$，则有 $G_f(u,v)&gt;0$，$s$ 可以到达 $v$，与 $v \in T$ 矛盾。</p>
+<p>因此有 $f(S,T)= \sum f(u,v)=\sum c(u,v)=C(S,T)$。</p>
+<h3 id="证明-3--1">证明 3 =&gt; 1：</h3>
+<p>由于 $f$ 的上界为最小割，当 $f$ 到达割的容量时，显然就已经到达最大值，因此 $f$ 为最大流。</p>
+<p>这样就说明了为什么找不到增广路时，所求得的一定是最大流。</p>
+<h2 id="最大权闭合子图">最大权闭合子图</h2>
+<p>在一个图中，我们选取一些点构成集合，记为 V，且集合中的出边（即集合中的点的向外连出的弧），所指向的终点也在 V 中，则我们称 V 为闭合图。在所有闭合图中，集合中点的权值之和最大的 V，称为<strong>最大权闭合子图</strong>。</p>
+<h3 id="栗子">栗子</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cutt.png" alt="img"></p>
+<p>上图中最大权闭合子图为 {3,4,5}。</p>
+<h2 id="最大权闭合子图权值和">最大权闭合子图权值和</h2>
+<h3 id="构图">构图</h3>
+<p>构建一个超级源点 s，一个超级汇点 t，所有的点按权值的正负连接到 s 和 t 上，转换成一个边权值有向图，如下图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cut2.png" alt="img"></p>
+<p>（注：点权为 0 的点可以忽略，对结果没有影响）</p>
+<h3 id="前置知识">前置知识</h3>
+<ul>
+<li>该带边权有向图的 S - T 最小割，割集中所有的边，都与 s 或 t 相连接。</li>
+</ul>
+<blockquote>
+<p>显然，因为不与 s,t 相连的边，权值都是 INF，最小割不可能割在 INF 的边上。</p>
+</blockquote>
+<ul>
+<li>该图中的每一个简单割产生的两个子图，我们记含有点 s 的是图 S，含有点 t 的是图 T，则图 S 是最大权闭合子图。</li>
+</ul>
+<blockquote>
+<p>简单割内不包含边权为 INF 的边，即不含有连通两个图的边（除了连接在 t 点上的边之外）；即，图 S 中没有边与图 T 连通，那么，所有的边都只能连接在图 S 之内，即为闭合图。</p>
+</blockquote>
+<p>记割集中，所有连接在 s 上的边的权值和为 $x_1$，所有连接在 t 上的边的权值和为 $x_2$，则割集中所有边权值和为 $x=x_1+x_2$。</p>
+<p>记图 S 中所有点的权值和为 $w$，记其中正权值之和为 $w_1$，负权值之和为 $- w_2$，故 $w = w_1 - w_2$。</p>
+<p>因此，
+$$
+w+x=w_1-w_2+x_1-x_2
+$$
+又 ，
+$$
+x_2 = w_2
+$$
+因为图 S 中所有负权值的点必然连接到 t 点，而图 S 必然要与 t 分割开，故割集中，<strong>连接在 t 点上的边权值和</strong>就是<strong>图S中所有负权值点的权值之和取负</strong>。因而，
+$$
+w+x=w_1+x_1
+$$
+显然，$w_1 + x_1$ 是整个图中所有正权值之和，记为 $sum$，则
+$$
+w=sum-x
+$$
+即，<strong>图 S 中所有点的权值和 = 整个图中所有正权值之和 - 割集中所有边权值和</strong>。因为 $sum$ 为定值，只要我们取最小割，则<strong>图 S 中所有点的权值和</strong>就是最大的，即此时图 S 为最大权闭合子图。</p>
+<h3 id="栗子-1">栗子</h3>
+<p>　　　　　<img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cut3.png" alt="img">　　　　　<img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/cut4.png" alt="img"></p>
+<h3 id="解法">解法</h3>
+<ul>
+<li>
+<p>先记录整个图中，所有正点权值的和；</p>
+</li>
+<li>
+<p>建立对应流网络，求最大流，最大流在数值上等于最小割，故我们得到了流网络的 s-t 最小割；</p>
+</li>
+<li>
+<p><strong>所有正点权值的和</strong>减去 <strong>s-t 最小割</strong>，即得最大权闭合子图的权值和。</p>
+</li>
+</ul>
+<h2 id="p2762-太空飞行计划问题">P2762 太空飞行计划问题</h2>
+<h3 id="hint">Hint</h3>
+<p>这里大概讲一下转换成最大流以后怎么输出。</p>
+<p>一个结论就是假如我们跑的是 Dinic 那么我们最后一次网络流（这一次网络流并没有起任何作用，只是确认了无更多残余流量可以退出了）中，所有被分到层的都一定被选上了。</p>
+<p>没有更多残余流量其实意味着这个图已经被割成了两部分，一个实验如果有层数意味着它没有被割掉（被选上了），一个仪器如果有层数意味着它已经被割掉了（也是被选上了）。</p>
+<p>于是只要在最后输出所有有层数的点就行了。</p>
+<h3 id="code">Code</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+const int N = 110, INF = 0x3f3f3f3f;
+char tools[10000];
+
+class node {
+    public:
+        int u, v, w, next;
+} e[N * N];
+
+int head[N], cur[N], tot = 0;
+
+void add(int u, int v, int w) {
+    e[tot] = {u, v, w, head[u]};
+    head[u] = tot++;
+    e[tot] = {v, u, 0, head[v]};
+    head[v] = tot++;
+}
+
+int h[N], n, m, s, t;
+bool bfs() {
+    
+    memset(h, 0, sizeof h);
+    memcpy(cur, head, sizeof cur);
+    
+    queue&lt;int&gt; q;
+    q.push(s);
+    h[s] = 1;
+    
+    while(!q.empty()) {
+        int u = q.front();
+        q.pop();
+        for(int i = head[u]; i != -1; i = e[i].next) {
+            int v = e[i].v;
+            if(e[i].w and h[v] == 0) {
+                h[v] = h[u] + 1;
+                if(v == t) return true;
+                q.push(v);
+            }
+        }
+    }
+    
+    return false;
+}
+
+int dfs(int u, int low) {
+    if(u == t) return low;
+    int w = low;
+    for(int i = cur[u]; i != -1; i = e[i].next, cur[u] = i) {
+        int v = e[i].v;
+        if(e[i].w and h[v] == h[u] + 1) {
+            int f = dfs(v, min(w, e[i].w));
+            if(f == 0) h[v] = 0;
+            e[i].w -= f;
+            e[i^1].w += f;
+            w -= f;
+            if(w == 0) break;
+        }
+    }
+    return low - w;
+}
+int maxflow = 0, sum = 0;
+void dinic() {
+    int flow;
+    while(bfs()) while(flow = dfs(s, INF)) maxflow += flow;
+}
+int main() {
+    
+    //freopen(&quot;shut2.in&quot;, &quot;r&quot;, stdin);
+    
+    scanf(&quot;%d%d&quot;, &amp;m, &amp;n);
+    
+    memset(head, -1, sizeof head);
+    s = 0, t = n+m+1;
+    for(int i=1, w; i&lt;=m; ++i) {
+        
+        scanf(&quot;%d&quot;, &amp;w);
+        add(s, i, w);
+        sum += w;
+        
+        memset(tools, '\0', sizeof tools); 
+        cin.getline(tools, 10000);
+        int ulen = 0, tool;
+        while(sscanf(tools + ulen, &quot;%d&quot;, &amp;tool) == 1) {
+            add(i, tool + m, INF);
+            if(tool == 0) ulen++;
+            else {
+                while(tool) {
+                    tool /= 10;
+                    ulen++;
+                }
+            }
+            ulen++;
+        }
+    }
+    
+    for(int i=1, w; i&lt;=n; ++i) {
+        scanf(&quot;%d&quot;, &amp;w);
+        add(i+m, t, w);
+    }
+    
+    dinic();
+    
+    for(int i=1; i&lt;=m; ++i) if(h[i]) printf(&quot;%d &quot;, i);
+    printf(&quot;\n&quot;);
+    for(int i=1; i&lt;=n; ++i) if(h[i+m]) printf(&quot;%d &quot;, i);
+    printf(&quot;\n&quot;);
+    
+    printf(&quot;%d\n&quot;, sum - maxflow);
+    
+    return 0;
+}
+</code></pre>
+<h2 id="全局最小割">全局最小割</h2>
+<p>暂时留坑，可以先参考<a href="https://blog.csdn.net/ddelphine/article/details/77935670">这篇文章</a>。</p>
+<h3 id="code-poj-2914-未优化版">Code (POJ 2914, 未优化版)</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+const int N = 550;
+
+int g[N][N];
+int dis[N];
+bool flag[N], vis[N];
+int n, m, s, t;
+
+int main() {
+    
+    while(scanf(&quot;%d%d&quot;, &amp;n, &amp;m) != EOF) {
+        
+        memset(g, 0, sizeof g);
+        
+        for(int i=1, a, b, c; i&lt;=m; ++i) {
+            scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;c);
+            ++a, ++b;
+            g[a][b] += c; g[b][a] += c; 
+        }
+        
+        int ans = 0x3f3f3f3f;
+        memset(flag, false, sizeof flag);
+        
+        for(int o=1; o&lt;n; ++o) {
+            
+            s = t = 0;
+            
+            memset(vis, false, sizeof vis);
+            memset(dis, 0, sizeof dis); 
+            
+            for(int p=1; p&lt;=n; ++p) {
+                
+                int v = -1;
+                for(int i=1; i&lt;=n; ++i) 
+                    if(!flag[i] and !vis[i] and (v == -1 or dis[v] &lt; dis[i]))
+                        v = i;
+                if(v == -1) break;
+                
+                vis[v] = true;
+                
+                s=t, t=v;
+                for(int i=1; i&lt;=n; ++i) 
+                    if(!flag[i] and !vis[i]) 
+                        dis[i] += g[t][i];
+            }
+            
+            flag[t] = true;
+            ans = min(ans, dis[t]);
+            
+            if(ans == 0) break;
+            
+            for(int i=1; i&lt;=n; ++i) {
+                if(flag[i]) continue;
+                g[s][i] += g[t][i];
+                g[i][s] += g[i][t];
+            }
+                
+        }
+        
+        printf(&quot;%d\n&quot;, ans);
+    } 
+    
+    return 0;
+}
+
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#网络流</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E6%9C%80%E5%B0%8F%E5%89%B2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#最小割</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/maximum-flow/" class="block">网络流：最大流</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/network-flow-template/" class="block">网络流：模板</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#s---t-最小割">S - T 最小割</a></li>
+    <li><a href="#最大流最小割定理">最大流最小割定理</a>
+      <ul>
+        <li><a href="#证明-step-1任意一个流都小于等于任意一个割">证明 Step 1：任意一个流都小于等于任意一个割</a></li>
+        <li><a href="#step-2构造出一个流使它等于一个割">Step 2：构造出一个流，使它等于一个割</a></li>
+        <li><a href="#step-3最大流等于最小割">Step 3：最大流等于最小割</a></li>
+        <li><a href="#网络流等价定理">网络流等价定理</a></li>
+        <li><a href="#证明-1--2即增广路定理">证明 1 =&gt; 2（即增广路定理）</a></li>
+        <li><a href="#证明-2--3即最大流最小割定理">证明 2 =&gt; 3（即最大流最小割定理）</a></li>
+        <li><a href="#证明-3--1">证明 3 =&gt; 1：</a></li>
+      </ul>
+    </li>
+    <li><a href="#最大权闭合子图">最大权闭合子图</a>
+      <ul>
+        <li><a href="#栗子">栗子</a></li>
+      </ul>
+    </li>
+    <li><a href="#最大权闭合子图权值和">最大权闭合子图权值和</a>
+      <ul>
+        <li><a href="#构图">构图</a></li>
+        <li><a href="#前置知识">前置知识</a></li>
+        <li><a href="#栗子-1">栗子</a></li>
+        <li><a href="#解法">解法</a></li>
+      </ul>
+    </li>
+    <li><a href="#p2762-太空飞行计划问题">P2762 太空飞行计划问题</a>
+      <ul>
+        <li><a href="#hint">Hint</a></li>
+        <li><a href="#code">Code</a></li>
+      </ul>
+    </li>
+    <li><a href="#全局最小割">全局最小割</a>
+      <ul>
+        <li><a href="#code-poj-2914-未优化版">Code (POJ 2914, 未优化版)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/cf387d/">CF387D</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/monotonous-queue/">单调队列</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-splay/">浅谈 Splay（一）</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/network-flow-dijkstra/">网络流：Dijkstra 求费用流</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

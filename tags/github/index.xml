@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub on Eureka Demo</title>
+    <link>https://www.atsnow.tk/tags/github/</link>
+    <description>Recent content in GitHub on Eureka Demo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;C. Wang&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;R. Ma&lt;/a&gt;</copyright><atom:link href="https://www.atsnow.tk/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hexo：配置 SSH 公钥部署</title>
+      <link>https://www.atsnow.tk/hexo-ssh-deploy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.atsnow.tk/hexo-ssh-deploy/</guid>
+      <description>Hexo：配置 SSH 公钥部署 配置 git 使用 ssh 密钥 git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（</description>
+    </item>
+    
+  </channel>
+</rss>

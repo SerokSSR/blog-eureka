@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>D2T1：贪心、二分、并查集 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="常见的贪心技巧 货币使用问题： 尽可能少用，那么我们就先拿面值最大的，依次往下走，最后拿光了即可。 区间调度问题： 工作时间不能重叠，在可选工作中，每次都选取">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"D2T1：贪心、二分、并查集",
+      "item":"https://www.atsnow.tk/noip-d2t1/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/noip-d2t1/"
+    },
+    "headline": "D2T1：贪心、二分、并查集 | Eureka Demo","wordCount":  910 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "常见的贪心技巧 货币使用问题： 尽可能少用，那么我们就先拿面值最大的，依次往下走，最后拿光了即可。 区间调度问题： 工作时间不能重叠，在可选工作中，每次都选取"
+}
+</script><meta property="og:title" content="D2T1：贪心、二分、并查集 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/noip-d2t1/" />
+
+
+
+
+<meta property="og:description" content="常见的贪心技巧 货币使用问题： 尽可能少用，那么我们就先拿面值最大的，依次往下走，最后拿光了即可。 区间调度问题： 工作时间不能重叠，在可选工作中，每次都选取" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="DFS" />
+
+<meta property="article:tag" content="记忆化搜索" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-graph/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-linear/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-series/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">D2T1：贪心、二分、并查集</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h3 id="常见的贪心技巧">常见的贪心技巧</h3>
+<p>货币使用问题：
+尽可能少用，那么我们就先拿面值最大的，依次往下走，最后拿光了即可。</p>
+<p>区间调度问题：
+工作时间不能重叠，在可选工作中，每次都选取结束时间最早的作为选择，可以使工作量最大。</p>
+<h3 id="切题小技巧">切题小技巧</h3>
+<ol>
+<li>递归，从后向前</li>
+<li>预处理</li>
+<li>划分子结构</li>
+<li>单调队列、滑动窗口</li>
+<li><b>能剪的枝一定要减！能剪的枝一定要减！能剪的枝一定要减！</b></li>
+<li>但是剪枝别剪挂了……</li>
+</ol>
+<h3 id="手动扩栈">手动扩栈</h3>
+<p>编译时指定参数</p>
+<pre><code class="language-powershell">-Wl,--stack=size 
+</code></pre>
+<p>size是栈的大小，单位为字节。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/images/2020/10/10/f016d8da5ea39bdb543c2b52c2fe501f.png" alt="">
+<img src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/images/2020/10/10/9b025b0dcf84f22da77e77f039bd78e5.png" alt=""></p>
+<h3 id="p5686-csp-sjx2019和积和">P5686 [CSP-SJX2019]和积和</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+typedef long long ll;
+const int N = 500005, P = 1e9+7;
+int n;
+ll a[N], b[N], sa[N], sb[N], s[N], ssa[N], ssb[N];
+
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;n);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%lld&quot;, a+i);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%lld&quot;, b+i);
+	
+	ll ans = 0, s = 0, sa = 0, sb = 0;
+	for(int i=n; i&gt;=1; --i) {
+		sa += a[i]*(n+1-i)%P; sa%=P; sb += b[i]*(n+1-i)%P; sb%=P;
+		ll del = ((a[i]*sb%P + b[i]*sa%P)%P + P - a[i]*b[i]%P*(n-i+1)%P)%P;
+		s += del; s %= P;
+		ans += s; ans %= P;
+	}
+	printf(&quot;%lld\n&quot;, ans);
+	
+	return 0;
+}
+</code></pre>
+<h3 id="u129453-ezec-45占座位">U129453 「EZEC-4.5」占座位</h3>
+<p><a href="https://www.luogu.com.cn/blog/Lazyhurryup/zhan-zuo-wei">题解</a></p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+map&lt;ll, ll&gt; f;
+ll n, k;
+ll dfs(ll n) {
+	if(f[n]) return f[n];
+	if(n &lt; 2*k+2) return f[n] = 1;
+	return f[n] = dfs(n/2) + dfs(n-n/2);
+}
+int main() {
+	scanf(&quot;%lld%lld&quot;, &amp;n, &amp;k);
+	if(k == 0) printf(&quot;%lld\n&quot;, n); else printf(&quot;%lld\n&quot;, dfs(n));
+	return 0;
+}
+</code></pre>
+<h3 id="p1182-数列分段-section-ii">P1182 数列分段 Section II</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+typedef long long ll;
+const int N = 1e5 + 10;
+int n, m; ll a[N];
+
+bool check(ll v) {
+	ll sum = 0, pt = 0;
+	int i=1;
+	while(i&lt;=n) {
+		while(i&lt;=n &amp;&amp; sum + a[i] &lt;= v) {
+			sum += a[i];
+			++i;
+		}
+		++pt; if(pt &gt; m) return false; sum = 0;
+	}
+	return true;
+}
+int main() {
+	//freopen(&quot;p1182_1.in&quot;,&quot;r&quot;,stdin);
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	
+	ll l=1, r=1e9;
+	for(int i=1; i&lt;=n; ++i) {
+		scanf(&quot;%lld&quot;, a+i);
+		l = max(l, a[i]);
+	}
+	
+	while(l &lt; r-1) {
+		ll mid = l+(r-l)/2;
+		if(check(mid)) r=mid;
+		else l=mid+1;
+	}
+	if(check(l)) printf(&quot;%lld\n&quot;, l); else printf(&quot;%lld\n&quot;, r);
+	
+	return 0;
+}
+</code></pre>
+<h3 id="p2822-组合数问题">P2822 组合数问题</h3>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+const int N = 2200, INF = 0x3f3f3f3f;
+int c[N][N], sum[N][N];
+int T, k;
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;T, &amp;k);
+	c[0][0] = 1;
+	for(int i=1; i&lt;=2000; ++i) {
+		c[i][0] = 1;
+		for(int j=1; j&lt;=i; ++j) {
+			c[i][j] = c[i-1][j-1] + c[i-1][j];
+			c[i][j] %= k;
+		}
+	}
+	for(int i=0; i&lt;=2000; ++i) {
+		for(int j=0; j&lt;=i; ++j) {
+			sum[i][j] = (c[i][j] == 0);
+		}
+	}
+	for(int i=0; i&lt;=2000; ++i) {
+		for(int j=1; j&lt;=2000; ++j) {
+			sum[i][j] += sum[i][j-1];
+		}
+	}
+	for(int j=0; j&lt;=2000; ++j) {
+		for(int i=1; i&lt;=2000; ++i) {
+			sum[i][j] += sum[i-1][j];
+		}
+	}
+	while(T--) {
+		int n, m;
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		printf(&quot;%d\n&quot;, sum[n][min(n,m)]);	
+	}
+
+	return 0;
+}
+</code></pre>
+<h3 id="p1007-独木桥">P1007 独木桥</h3>
+<p>求最大时间时，把碰面想象成交换身份即可</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+int l, n, p[5005];
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;l, &amp;n);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, p+i);
+	
+	int ans1 = 0;
+	for(int i=1; i&lt;=n; ++i) {
+		ans1 = max(ans1, min(p[i], l+1-p[i]));
+	}
+	int ans2 = 0;
+	for(int i=1; i&lt;=n; ++i) {
+		ans2 = max(ans2, max(p[i], l+1-p[i]));
+	}
+	printf(&quot;%d %d\n&quot;, ans1, ans2);
+	return 0;
+}
+</code></pre>
+<h3 id="p3958-奶酪">P3958 奶酪</h3>
+<p>特点是自底至上找出通路，可以联想至森林合并。</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+typedef long long LL;
+const int N = 1100;
+
+struct node {
+	LL x, y, z;
+} a[N];
+
+bool cmp(node a, node b) {
+	return (a.z &lt; b.z);
+}
+bool tp[N], bt[N];
+int fa[N], T, n;
+LL h, r;
+int root(int x) {
+	return fa[x]==x?x:root(fa[x]);
+}
+bool check(int i, int j) {
+	LL dist = (a[i].x-a[j].x)*(a[i].x-a[j].x) + (a[i].y-a[j].y)*(a[i].y-a[j].y) + (a[i].z-a[j].z)*(a[i].z-a[j].z);
+	return dist &lt;= 4*r*r;
+}
+
+int main() {
+	
+	scanf(&quot;%d&quot;, &amp;T);
+	while(T--) {
+		scanf(&quot;%d%lld%lld&quot;, &amp;n, &amp;h, &amp;r);
+		memset(bt, false, sizeof bt);
+		memset(tp, false, sizeof tp);
+		for(int i=1; i&lt;=n; ++i) 
+			scanf(&quot;%lld%lld%lld&quot;, &amp;a[i].x, &amp;a[i].y, &amp;a[i].z);
+		sort(a+1, a+n+1, cmp);
+		
+		for(int i=1; i&lt;=n; ++i) {
+		 	if(a[i].z - r &lt;= 0) bt[i] = true;
+			if(a[i].z + r &gt;= h) tp[i] = true;
+		}
+		
+		for(int i=1; i&lt;=n; ++i) fa[i] = i;
+		for(int i=1; i&lt;=n; ++i) {
+			for(int j=i+1; j&lt;=n; ++j) {
+				if(check(i, j)) {
+					fa[root(i)] = root(j);
+				}
+			}
+		}
+
+		bool fla = false;
+		for(int i=1; i&lt;=n; ++i) {
+			if(bt[i] &amp;&amp; tp[root(i)]) {
+				fla = true;
+				break;
+			}
+		}
+		printf(&quot;%s&quot;, (fla ? &quot;Yes\n&quot; : &quot;No\n&quot;));
+	}
+	return 0;
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/dfs/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DFS</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#记忆化搜索</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/cf387d/" class="block">CF387D</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/kpl2020/" class="block">DYG：他们的时代</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#常见的贪心技巧">常见的贪心技巧</a></li>
+        <li><a href="#切题小技巧">切题小技巧</a></li>
+        <li><a href="#手动扩栈">手动扩栈</a></li>
+        <li><a href="#p5686-csp-sjx2019和积和">P5686 [CSP-SJX2019]和积和</a></li>
+        <li><a href="#u129453-ezec-45占座位">U129453 「EZEC-4.5」占座位</a></li>
+        <li><a href="#p1182-数列分段-section-ii">P1182 数列分段 Section II</a></li>
+        <li><a href="#p2822-组合数问题">P2822 组合数问题</a></li>
+        <li><a href="#p1007-独木桥">P1007 独木桥</a></li>
+        <li><a href="#p3958-奶酪">P3958 奶酪</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/dp-graph/">搜索与状压 DP</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-linear/">简单动态规划：LIS、LCS、背包</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-series/">高级动态规划：区间、树形</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

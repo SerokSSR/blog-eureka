@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Hexo：配置 SSH 公钥部署 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="Hexo：配置 SSH 公钥部署 配置 git 使用 ssh 密钥 git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Hexo：配置 SSH 公钥部署",
+      "item":"https://www.atsnow.tk/hexo-ssh-deploy/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/hexo-ssh-deploy/"
+    },
+    "headline": "Hexo：配置 SSH 公钥部署 | Eureka Demo","wordCount":  671 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "Hexo：配置 SSH 公钥部署 配置 git 使用 ssh 密钥 git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（"
+}
+</script><meta property="og:title" content="Hexo：配置 SSH 公钥部署 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/hexo-ssh-deploy/" />
+
+
+
+
+<meta property="og:description" content="Hexo：配置 SSH 公钥部署 配置 git 使用 ssh 密钥 git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="Hexo" />
+
+<meta property="article:tag" content="SSH" />
+
+<meta property="article:tag" content="GitHub" />
+
+<meta property="article:tag" content="部署" />
+
+<meta property="article:tag" content="博客" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/hexo-vercel/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/hexo-gulp-pwa/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/butterfly-aplayer/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Hexo：配置 SSH 公钥部署</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/hexo/" class="hover:text-eureka">Hexo</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="hexo配置-ssh-公钥部署">Hexo：配置 SSH 公钥部署</h1>
+<h2 id="配置-git-使用-ssh-密钥">配置 git 使用 ssh 密钥</h2>
+<p>git 支持 https 和 git 两种传输协议。其实两种方式都可以，但是如果使用https协议，每次pull、push都要输入密码（大部分电脑上），所以建议使用ssh密钥对认证，可实现免密且更加安全。下面将介绍Hexo如何配置 SSH 公钥部署。</p>
+<p>示例在Windows环境下。</p>
+<h3 id="step-1生成密钥对">Step 1：生成密钥对</h3>
+<p>- 进入 <code>C:\用户\[你的用户名]/.ssh</code> 文件夹，右键唤出 PowerShell</p>
+<p>- 输入 <code>ssh-keygen</code>，并一直敲击回车至密钥图生成，可以看到文件夹中多出了两个文件：<code>id_rsa</code> 和 <code>id_rsa.pub</code></p>
+<p><strong>实例：</strong></p>
+<pre><code class="language-powershell">SerokSSR@Desktop-ABCDEFG ~\.ssh
+&gt; ssh-keygen  
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\SerokSSR/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in C:\Users\SerokSSR/.ssh/id_rsa.
+Your public key has been saved in C:\Users\SerokSSR/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:fO7pVFqZ464nC8H6B3pTE8cwPx2mTM0G8KJt7Or2L8o SerokSSR@DESKTOP-ABCDEFG
+The keys randomart image is:
++---[RSA 2048]----+
+|          ...+   |
+|          o.. *  |
+|          .B.= . |
+|       o +..Bo.  |
+|        S =o*.   |
+|       ..*o= .   |
+|      ...o=..    |
+|      .o+=+o.    |
+|       +E*BBo    |
++----[SHA256]-----+
+</code></pre>
+<h3 id="step-2配置远程仓库的公钥">Step 2：配置远程仓库的公钥</h3>
+<p>- 访问GitHub，点击 头像 -&gt; Settings -&gt; 左侧SSH and GPG keys -&gt; 右上New SSH key</p>
+<p>- 打开你刚才生成的 <code>/.ssh/id_rsa.pub</code>，把里面的内容全选复制到Key栏中，Title栏可不填</p>
+<p><img src="https://i.loli.net/2020/07/23/7NeufbtGsUzom8l.png" alt="image.png"></p>
+<p>- 点击 Add SSH key，完成添加</p>
+<h3 id="step-3验证密钥是否生效">Step 3：验证密钥是否生效</h3>
+<p>控制台输入 <code>ssh -T git@github.com</code>，出现如下回复则密钥已生效。</p>
+<pre><code class="language-powershell">SerokSSR@DESKTOP-ABCDEFG ~\.ssh
+&gt; ssh -T git@github.com
+Hi SerokSSR! Youve successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+<h3 id="step-4添加-ssh-仓库">Step 4：添加 SSH 仓库</h3>
+<p>在你的博客根目录下的 <code>_config.yml</code>，找到 deploy选项，将你仓库的ssh链接添加至此处。</p>
+<p><strong>实例：</strong></p>
+<pre><code class="language-yml">deploy:
+- type: git
+  repo: git@github.com:SerokSSR/snow.git
+  branch: master
+</code></pre>
+<h3 id="step-5配置hexo部署">Step 5：配置Hexo部署</h3>
+<p>为了方便每次部署，可以在你的博客根目录下新建 <code>deploy.sh</code>，添加以下内容：</p>
+<pre><code class="language-bash">#!
+echo &quot;Start&quot;
+hexo clean
+hexo generate
+hexo deploy
+echo &quot;Finish&quot;
+echo 按任意键继续
+read -n 1
+</code></pre>
+<p>然后每次部署就可以直接运行这个脚本，而不用每次都要敲一遍 <code>hexo cl&amp;&amp;hexo g&amp;&amp;hexo d</code>了。</p>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/hexo/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#Hexo</a>
+    
+    <a href="https://www.atsnow.tk/tags/ssh/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#SSH</a>
+    
+    <a href="https://www.atsnow.tk/tags/github/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#GitHub</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E9%83%A8%E7%BD%B2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#部署</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%8D%9A%E5%AE%A2/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#博客</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/hexo-gulp-pwa/" class="block">Hexo：为你的博客配置 PWA</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/noip2020-you-ji/" class="block">NOIP2020 游记</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置-git-使用-ssh-密钥">配置 git 使用 ssh 密钥</a>
+      <ul>
+        <li><a href="#step-1生成密钥对">Step 1：生成密钥对</a></li>
+        <li><a href="#step-2配置远程仓库的公钥">Step 2：配置远程仓库的公钥</a></li>
+        <li><a href="#step-3验证密钥是否生效">Step 3：验证密钥是否生效</a></li>
+        <li><a href="#step-4添加-ssh-仓库">Step 4：添加 SSH 仓库</a></li>
+        <li><a href="#step-5配置hexo部署">Step 5：配置Hexo部署</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/hexo-vercel/">Hexo：将你的博客部署到 Vercel</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/hexo-gulp-pwa/">Hexo：为你的博客配置 PWA</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/butterfly-aplayer/">Butterfly：添加全局吸底 Aplayer 播放器</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

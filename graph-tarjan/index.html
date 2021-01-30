@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>图论：Tarjan | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="前置概念 时间戳：搜索时第几个搜索到这个点。如搜索顺序是1-&gt;2-&gt;3-&gt;6，则6的时间戳为4 对于无向图 连通分量：对于图G来的一个子图">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"图论：Tarjan",
+      "item":"https://www.atsnow.tk/graph-tarjan/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/graph-tarjan/"
+    },
+    "headline": "图论：Tarjan | Eureka Demo","wordCount":  1216 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "前置概念 时间戳：搜索时第几个搜索到这个点。如搜索顺序是1-\u0026gt;2-\u0026gt;3-\u0026gt;6，则6的时间戳为4 对于无向图 连通分量：对于图G来的一个子图"
+}
+</script><meta property="og:title" content="图论：Tarjan | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/graph-tarjan/" />
+
+
+
+
+<meta property="og:description" content="前置概念 时间戳：搜索时第几个搜索到这个点。如搜索顺序是1-&gt;2-&gt;3-&gt;6，则6的时间戳为4 对于无向图 连通分量：对于图G来的一个子图" />
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="图论" />
+
+<meta property="article:tag" content="DAG" />
+
+<meta property="article:tag" content="算法" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-theory/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-lca/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/dp-graph/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">图论：Tarjan</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h2 id="前置概念">前置概念</h2>
+<p>时间戳：搜索时第几个搜索到这个点。如搜索顺序是1-&gt;2-&gt;3-&gt;6，则6的时间戳为4</p>
+<h3 id="对于无向图">对于无向图</h3>
+<p>连通分量：对于图G来的一个子图中，任意两个点都可以彼此到达，这个子图就被称为图G的连通分量（一个点就是最小的连通分量）</p>
+<p>最大连通分量：对于图G的一个子图，这个子图为图G的连通分量，且是图G所有连通分量中包含节点数最多的那个，即为G的最大联通分量</p>
+<h2 id="算法流程">算法流程</h2>
+<p>个人认为Tarjan是提高组范围内最难的一个算法了，我自己说不太明白。。。<a href="https://blog.csdn.net/acmmmm/article/details/16361033">推荐看看这篇</a></p>
+<h2 id="简单应用">简单应用</h2>
+<h3 id="缩点">缩点</h3>
+<p>有向图强连通分量：在有向图G中，如果两个顶点vi,vj间（vi&gt;vj）有一条从vi到vj的有向路径，同时还有一条从vj到vi的有向路径，则称两个顶点强连通(strongly connected)。孤立的一个点也是一个强连通分量。</p>
+<p>如果有向图G的每两个顶点都强连通，称G是一个强连通图。有向图的极大强连通子图，称为强连通分量（SCC, Strongly Connected Components）。把每个强联通分量看成一个集合，把每个集合看成一个点，那么所有SCC就形成了一个DAG（有向无环图），就是著名的缩点。</p>
+<p><a href="https://www.luogu.com.cn/problem/P3387">Problem</a></p>
+<p>根据题目意思，我们只需要找出一条点权最大的路径就行了，不限制点的个数。那么考虑对于一个环上的点被选择了，一整条环是不是应该都被选择，这一定很优，能选干嘛不选。很关键的是题目还允许我们重复经过某条边或者某个点，我们就不需要考虑其他了。因此整个环实际上可以看成一个点（选了其中一个点就应该选其他的点）</p>
+<p>在处理了环后，我们就重新建立一张图，以每个环为节点（孤立一个点也算也算环的，其实也就是强联通分量了）。在这张图中我们要dp，显然对于任意边&lt;u,v&gt;，<code>dp[v] = max(dp[v], dp[u] + new_weight[v])</code>。</p>
+<p>dp的时候拓扑排一下序，这也是DAGdp的常见trick了。</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 1e4+10, M = 1e5+10;
+struct node {
+	int u, v, nxt;
+} e[M];
+int h[N], tot = 0;
+int dfn[N], low[N], tag = 0, top = 0, num = 0;
+int n, m, w[N], ww[N], f[N], id[N], s[N], in[N];
+void tarjan(int u) {
+	
+	dfn[u] = low[u] = ++tag;
+	s[++top] = u;
+	for(int i = h[u], v; i; i = e[i].nxt) {
+		v = e[i].v;
+		if(!dfn[v]) {
+			tarjan(v);
+			low[u] = min(low[u], low[v]);
+		} else if(!id[v]) low[u] = min(low[u], dfn[v]);
+	}
+	
+	if(dfn[u] == low[u]) {
+		++num;
+		while(s[top] != u) {
+			id[s[top]] = num; ww[num] += w[s[top]]; top--;
+		}
+		id[s[top]] = num; ww[num] += w[s[top]]; top--;
+    }
+    
+}
+
+int main() {
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	for(int i=1; i&lt;=n; ++i) scanf(&quot;%d&quot;, w+i);
+	
+	for(int i=1; i&lt;=m; ++i) {
+		int u, v; scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		if(u == v) continue; e[++tot] = {u, v, h[u]}; h[u] = tot;
+	}
+	for(int i=1; i&lt;=n; ++i) {
+		if(!dfn[i]) tarjan(i);
+	}
+	
+	memset(h, 0, sizeof h);
+	for(int i=0, t=0; i&lt;tot; ++i) {
+		int u = id[e[i].u], v = id[e[i].v];
+		if(u == v); else {
+			e[++t] = {u, v, h[u]}; h[u] = t;
+			++in[v];
+		}
+	}
+	
+	queue&lt;int&gt; q;
+	for(int i=1; i&lt;=num; ++i) {
+		if(!in[i]) q.push(i);
+	}
+	int ans = 0;
+	for(int i=1; i&lt;=num; ++i) f[i] = ww[i], ans = max(ans, f[i]);
+	while(!q.empty()) {
+		int u = q.front(); q.pop();
+		for(int i = h[u]; i; i = e[i].nxt) {
+			int v = e[i].v;
+			f[v] = max(f[v], f[u]+ww[v]);
+			ans = max(ans, f[v]);
+			--in[v];
+			if(!in[v]) q.push(v);
+		}
+	}
+	printf(&quot;%d\n&quot;, ans);
+	 
+	return 0;
+}
+</code></pre>
+<h3 id="找割点">找割点</h3>
+<p>割点：去掉无向联通图的某个点后，此图不连通，该点为割点。</p>
+<p><a href="https://www.luogu.com.cn/problem/P3388">Problem</a></p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;iostream&gt;
+using std::min;
+
+const int N = 22000, M = 110000;
+
+struct node {
+	int u, v, next;
+} e[M &lt;&lt; 1];
+int h[N], tot;
+
+int dfn[N], low[N], tag;
+int res[N], ans, n, m, fa[N];
+
+void tarjan(int u, int fa) {
+	
+	dfn[u] = low[u] = ++tag;
+	
+	int sum = 0;
+	for(int i = h[u], v; i; i = e[i].next) {
+		v = e[i].v;
+		if(v == fa) continue;
+		
+		if(dfn[v]) low[u] = min(low[u], dfn[v]);
+		else {
+			++sum;
+			tarjan(v, u);
+			low[u] = min(low[u], low[v]);
+			if(fa == -1) continue;
+			if(low[v] &gt;= dfn[u]) res[u] = true;
+		}
+	}
+	
+	if(fa == -1 and sum &gt; 1) res[u] = true;
+	
+}
+int main() {
+	
+	//freopen(&quot;p3388_4.in&quot;, &quot;r&quot;, stdin);
+	
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	
+	for(int i=1, x, y; i&lt;=m; ++i) {
+		scanf(&quot;%d%d&quot;, &amp;x, &amp;y);
+		e[++tot] = (node) {x, y, h[x]}; h[x] = tot;
+		e[++tot] = (node) {y, x, h[y]}; h[y] = tot;
+	}
+	
+	for(int i=1; i&lt;=n; ++i)
+		if(dfn[i] == 0) tarjan(i, -1);
+		
+	for(int i=1; i&lt;=n; ++i) if(res[i]) ++ans;
+	printf(&quot;%d\n&quot;, ans);
+	for(int i=1; i&lt;=n; ++i) if(res[i]) printf(&quot;%d &quot;, i);
+	
+	return 0;
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E5%9B%BE%E8%AE%BA/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#图论</a>
+    
+    <a href="https://www.atsnow.tk/tags/dag/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#DAG</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/graph-lca/" class="block">图论：LCA</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/mabaoguo/" class="block">年轻人不讲武德</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置概念">前置概念</a>
+      <ul>
+        <li><a href="#对于无向图">对于无向图</a></li>
+      </ul>
+    </li>
+    <li><a href="#算法流程">算法流程</a></li>
+    <li><a href="#简单应用">简单应用</a>
+      <ul>
+        <li><a href="#缩点">缩点</a></li>
+        <li><a href="#找割点">找割点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/graph-theory/">图论</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-lca/">图论：LCA</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/dp-graph/">搜索与状压 DP</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

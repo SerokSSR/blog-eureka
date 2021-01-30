@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>浅谈 Splay（一） | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="Splay 的旋转操作。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"浅谈 Splay（一）",
+      "item":"https://www.atsnow.tk/about-splay/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/about-splay/"
+    },
+    "headline": "浅谈 Splay（一） | Eureka Demo","wordCount":  1115 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "Splay 的旋转操作。"
+}
+</script><meta property="og:title" content="浅谈 Splay（一） | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/about-splay/" />
+
+
+
+<meta property="og:description" content="Splay 的旋转操作。" />
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="算法" />
+
+<meta property="article:tag" content="数据结构" />
+
+<meta property="article:tag" content="平衡树" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/about-codestyle/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/cf387d/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/monotonous-queue/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/minimum-cut/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/stl-set/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">浅谈 Splay（一）</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="一旋转zig---zag">一、旋转（Zig - Zag）</h1>
+<h2 id="1-右旋right-rotation">1. 右旋（Right Rotation）</h2>
+<p>观察每个节点的变化，其中每个节点都有指向其父节点的指针没有画出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/SerokSSR/img/splay1.png" alt="1.png"></p>
+<p><strong>①②③</strong>处节点连接有变化。</p>
+<h3 id="1q-的左子树修改为-p-的右子树的内容">（1）$Q$ 的左子树修改为 $P$ 的右子树的内容</h3>
+<p>即 $B$ 成为 $Q$ 的左子树， $B$ 的父节点是 $Q$ 。</p>
+<pre><code class="language-cpp">    q-&gt;left = p-&gt;right; 
+    p-&gt;right-&gt;father = q; 
+</code></pre>
+<p><strong>注意 P​ 可能没有右子树（即不存在 <code>P-&gt;right</code> 节点）。</strong></p>
+<p>修改如下：</p>
+<pre><code class="language-cpp">    q-&gt;left = p-&gt;right; 
+    if(p-&gt;right != NULL) p-&gt;right-&gt;father = q;
+</code></pre>
+<h3 id="2p-的右子树修改为-q-且同时-q-的父节点修改为-p-">（2）$P$ 的右子树修改为 $Q$ ，且同时 $Q$ 的父节点修改为 $P$ 。</h3>
+<pre><code class="language-cpp">    p-&gt;right = q; 
+    q-&gt;father = p;
+</code></pre>
+<p><strong>注意 Q 和 P 的左右子树有变化，所以 Q,P 的信息需要重新维护。</strong></p>
+<pre><code class="language-cpp">    update(q); update(p); //先Q后P
+</code></pre>
+<h3 id="3r-的子树应该修改为-p">（3）$R$ 的子树应该修改为 $P$</h3>
+<p>需要判断 $Q$ 是 $R$ 的哪种子树，左子树则 $P$ 给 $R$ 的左子树，否则给右子树。</p>
+<p>全局变量 $root$ 记录树根。</p>
+<p><strong>特判 $Q$ 有可能就是树根（即 $R$ 不存在）；</strong></p>
+<pre><code class="language-cpp">    if(r == NULL) {
+       p-&gt;father = NULL; root = p; return;
+    }
+    if(q == r-&gt;left) {
+       r-&gt;left = p; p-&gt;father = r;
+    } else {
+       r-&gt;right = p; p-&gt;father = r;
+    }
+</code></pre>
+<p>整理一下，<strong>不管 Q​ 有无父节点，P 的父节点均修改为 Q 的父节点</strong>。</p>
+<pre><code class="language-cpp">  p-&gt;father = r;
+  //记录树根
+  if(r == NULL) { root = p; return; }
+  //判断P连到R的那颗子树
+  if(q == r-&gt;left) r-&gt;left = p; 
+  else r-&gt;right = p; 
+</code></pre>
+<p><strong>Code :</strong></p>
+<pre><code class="language-cpp">  void right_rotate(node *p) {
+
+      node *q = p-&gt;father;     //记录p的父节点
+      node *r = q-&gt;father;     //记录p的父节点的父节点
+
+      //操作1
+      q-&gt;left = p-&gt;right; 
+      if(p-&gt;right != NULL) p-&gt;right-&gt;father = q;
+
+      //操作2
+      p-&gt;right = q; q-&gt;father = p;
+
+      //维护节点信息（注意此处可暂不维护P）
+      update(q); //update(p);
+
+      //操作3
+      p-&gt;father = r;
+      if(r == NULL) { root = p; return; }
+      
+      if(q == r-&gt;left) r-&gt;left = p; 
+      else r-&gt;right = p;
+  }
+</code></pre>
+<h2 id="2左旋left-rotation">2、左旋（Left Rotation）</h2>
+<p>同理右旋，只是<strong>①②</strong>不同。</p>
+<p><strong>Code :</strong></p>
+<pre><code class="language-cpp">  void left_rotate(node *p) {
+
+      node *q = p-&gt;father;     //记录p的父节点
+      node *r = q-&gt;father;     //记录p的父节点的父节点
+
+      //操作1
+      q-&gt;right = p-&gt;left; 
+      if(p-&gt;left != NULL) p-&gt;left-&gt;father = q; 
+
+      //操作2
+      p-&gt;left = q; q-&gt;father = p;
+
+      //维护节点信息
+      update(q); //update(p);
+
+      //操作3
+      p-&gt;father = r;
+      if(r == NULL){ root = p; return; }
+      
+      if(q == r-&gt;left) r-&gt;left = p; 
+      else r-&gt;right = p;
+  }
+</code></pre>
+<h2 id="3双旋">3、双旋</h2>
+<p><strong>不断旋转 $X$ 节点，为了保证复杂度，需要连续旋转两次且旋转的次序不同。</strong></p>
+<p>定义 $X$ 的父节点为 $Y$，$Y$ 的父节点为 $Z$。</p>
+<h3 id="1x-和-y-同时是其父节点的左子树或者同时是各自父节点的右子树即同侧">（1）$X$ 和 $Y$ 同时是其父节点的左子树或者同时是各自父节点的右子树（即同侧）。</h3>
+<p>这时我们要进行两次旋转，<strong>先旋转 $Y$，再旋转 $X$</strong>。</p>
+<p><img src="https://i.loli.net/2020/02/14/ftNOzGvPhIg4HrT.png" alt="2.png"></p>
+<p><strong>同左旋转演示图如下：</strong></p>
+<p><img src="https://i.loli.net/2020/02/14/xpoeDuh3tVzCYy1.png" alt="3.png"></p>
+<p><strong>同右旋转演示图如下：</strong></p>
+<p><img src="https://i.loli.net/2020/02/14/keNpErmPRzwSufY.png" alt="4.png"></p>
+<h3 id="2x-和-y-是其父节点的左右子树不同侧即一左一右或一右一左">（2）$X$ 和 $Y$ 是其父节点的左、右子树，不同侧（即一左一右或一右一左）。</h3>
+<p>这时我们只要 <strong>旋转两次 X​</strong> 即可。</p>
+<p><img src="https://i.loli.net/2020/02/14/uqCdzUHN56bEPXI.png" alt="5.png"></p>
+<h3 id="3判断-x-节点如何旋转">（3）判断 $X$ 节点如何旋转。</h3>
+<p><strong>$X$ 是其父节点的左子树则右旋，否则左旋。</strong></p>
+<p>$X$ 若是它父节点左子树返回 <code>true</code>，否则返回 <code>false</code>：</p>
+<pre><code class="language-cpp">bool getlr(node *p) {
+    return (p-&gt;father-&gt;left == p);
+}
+  
+//选择合适的旋转方式
+void rotate(node *p) {
+    if(getlr(p)) right_rotate(p); 
+    else left_rotate(p);
+}
+</code></pre>
+<h1 id="二旋转到根">二、旋转到根</h1>
+<p>将 $X$ 旋转到根是 <code>splay</code> 的关键，为了保证复杂度，<b>只要对 $X$ 节点操作，操作后就要将其旋转到根。</b></p>
+<p><em>如何旋转到根：</em></p>
+<ul>
+<li>
+<p>一步旋转就可以到根，进行单旋；</p>
+</li>
+<li>
+<p>两步或两步以上，可以不断使用双旋。</p>
+</li>
+</ul>
+<p>设计函数 <code>splay(p,q)</code> <strong>将 $P$ 旋转到 $Q$ 下方</strong>。</p>
+<ul>
+<li><code>q == NULL</code> 表示 $P$ 旋转到了根；</li>
+<li>while $P$ 至少两次旋转才能到达：双旋；</li>
+<li>if $P$ 还差一步满足条件：单旋。</li>
+</ul>
+<p><strong>Code :</strong></p>
+<pre><code class="language-cpp">void splay(node *p, node *tar) {
+
+      while(p-&gt;father != tar and p-&gt;father-&gt;father != tar) {
+          if(getlr(p) == getlr(p-&gt;father)) {
+              rotate(p-&gt;father); rotate(p);
+          } else {
+              rotate(p); rotate(p);
+          }
+      }
+
+      if(p-&gt;father != tar) rotate(p);
+      
+      update(p);  //优化（避免重复维护）
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#数据结构</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#平衡树</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/numa/" class="block">沼</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/she-jiang/" class="block">涉江</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-右旋right-rotation">1. 右旋（Right Rotation）</a>
+      <ul>
+        <li><a href="#1q-的左子树修改为-p-的右子树的内容">（1）$Q$ 的左子树修改为 $P$ 的右子树的内容</a></li>
+        <li><a href="#2p-的右子树修改为-q-且同时-q-的父节点修改为-p-">（2）$P$ 的右子树修改为 $Q$ ，且同时 $Q$ 的父节点修改为 $P$ 。</a></li>
+        <li><a href="#3r-的子树应该修改为-p">（3）$R$ 的子树应该修改为 $P$</a></li>
+      </ul>
+    </li>
+    <li><a href="#2左旋left-rotation">2、左旋（Left Rotation）</a></li>
+    <li><a href="#3双旋">3、双旋</a>
+      <ul>
+        <li><a href="#1x-和-y-同时是其父节点的左子树或者同时是各自父节点的右子树即同侧">（1）$X$ 和 $Y$ 同时是其父节点的左子树或者同时是各自父节点的右子树（即同侧）。</a></li>
+        <li><a href="#2x-和-y-是其父节点的左右子树不同侧即一左一右或一右一左">（2）$X$ 和 $Y$ 是其父节点的左、右子树，不同侧（即一左一右或一右一左）。</a></li>
+        <li><a href="#3判断-x-节点如何旋转">（3）判断 $X$ 节点如何旋转。</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/about-codestyle/">About CODESTYLE</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/cf387d/">CF387D</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/monotonous-queue/">单调队列</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/minimum-cut/">网络流：最小割</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/stl-set/">C&#43;&#43; STL：SET &amp; MULTISET</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang='zh' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>网络流：Dijkstra 求费用流 | Eureka Demo</title>
+<link rel="stylesheet" href="https://www.atsnow.tk/css/eureka.min.css">
+<script defer src="https://www.atsnow.tk/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_2.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://www.atsnow.tk/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_2.png">
+
+<meta name="description"
+  content="Dijkstra 不能求有负权边的最短路，所以我们可以对网络中的每一个点设置一个势函数，使等价图中边权非负。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://www.atsnow.tk/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"网络流：Dijkstra 求费用流",
+      "item":"https://www.atsnow.tk/network-flow-dijkstra/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.atsnow.tk/network-flow-dijkstra/"
+    },
+    "headline": "网络流：Dijkstra 求费用流 | Eureka Demo","wordCount":  767 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "C. Wang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.atsnow.tk/images/icon.png"
+        }
+        },
+    "description": "Dijkstra 不能求有负权边的最短路，所以我们可以对网络中的每一个点设置一个势函数，使等价图中边权非负。"
+}
+</script><meta property="og:title" content="网络流：Dijkstra 求费用流 | Eureka Demo" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://www.atsnow.tk/images/icon.png">
+
+
+<meta property="og:url" content="https://www.atsnow.tk/network-flow-dijkstra/" />
+
+
+
+<meta property="og:description" content="Dijkstra 不能求有负权边的最短路，所以我们可以对网络中的每一个点设置一个势函数，使等价图中边权非负。" />
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="Eureka Demo" />
+
+
+
+
+
+
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="网络流" />
+
+<meta property="article:tag" content="最短路" />
+
+<meta property="article:tag" content="算法" />
+
+
+
+
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-template/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/network-flow-deloop/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/graph-theory/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/maximum-flow/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/minimum-cut/" />
+
+<meta property="og:see_also" content="https://www.atsnow.tk/ruler-method/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">Eureka Demo</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            switchMode('Auto')
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script></div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">网络流：Dijkstra 求费用流</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>0001-01-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2分钟阅读时长</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://www.atsnow.tk/categories/%E7%AE%97%E6%B3%95/" class="hover:text-eureka">算法</a>
+        
+        
+        <span>, </span>
+        <a href="https://www.atsnow.tk/categories/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="hover:text-eureka">网络流</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h1 id="网络流dijkstra-求费用流">网络流：Dijkstra 求费用流</h1>
+<p><strong>注：下文中的边权 $w$ 均表示费用 $f$。</strong></p>
+<p>Dijkstra 不能求有负权边的最短路，所以我们可以对网络 $G$ 中的每一个点设置一个势函数 $h(u)$，以满足在与原图等价的新图中的边权非负。</p>
+<h2 id="最短路">最短路</h2>
+<p>在任意残留网络中的任意边 $(u,v)$ 都需要满足：
+$$
+w_{u, v}+h(u) - h(v)≥0
+$$
+令图 $G$ 的等价图为 $G'$，其对应的边 $(u,v)$ 的权值为
+$$
+w'_{u,v} = w_{u,v} + h(u) - h(v)
+$$
+因此，对于原图中的任意一条路径 $(u_1,u_2,\dots,u_k)$，它在 $G$ 中的权值为
+$$
+w_{u_1,u_2}+w_{u_2,u_3}+\dots+w_{u_{k-1},u_k}
+$$
+在 $G'$ 中的权值可化简为
+$$
+w_{u_1,u_2} + w_{u_2,u_3} + \dots + w_{u_{k-1}, u_k} + h(u_1)-h(u_k)
+$$
+**所以，在 $G'$ 求出的路径都可以对应到 $G$ 上。**</p>
+<p>令 $d_{u}$ 为图 $G$ 中源点 $s$ 到点 $u$ 的最短路径，图 $G'$ 中为 $d'_{u}$，显然有</p>
+<p>$$
+d_{u,v} = d'_{u,v}-h(u)+h(v)
+$$
+所以我们只需要求 $G'$ 的最短路径，就能对应回原图的最短路径。</p>
+<h2 id="势函数">势函数</h2>
+<h3 id="初值">初值</h3>
+<p>如果网络 $G$ 初始边权非负，则令 $h(u)=0$ ，否则可令 $h(u) = dis[u]$（用 SPFA 解决）。</p>
+<p>证明略。</p>
+<h3 id="维护">维护</h3>
+<p>每次增广后，令 $h(u)=h(u)+dis[u]$ 即可。</p>
+<p>证明：对于残余网络上的任意边 $(u,v)$，均有
+$$
+dis[u]+w_{u,v}+h(u)-h(v)≥dis[v]
+$$
+移项，得
+$$
+w_{u,v}+(h(u)+dis[u])-(h(v)+dis[v]) \geq 0
+$$
+证毕。</p>
+<h2 id="p3381-模板最小费用最大流">P3381 ［模板］最小费用最大流</h2>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;queue&gt;
+using namespace std;
+#define il inline
+
+const int N = 5500, M = 55000, INF = 0x3f3f3f3f;
+
+struct point {
+    int u, val;
+    point(int _u = 0, int _val = 0): u(_u), val(_val) {}
+    bool operator &lt; (const point &amp;o) const { return val &gt; o.val; } 
+};
+
+priority_queue &lt;point&gt; q;
+
+struct node {
+    int u, v, w, f, next;
+    node() {}
+} e[M &lt;&lt; 1];
+int head[N], tot = 0;
+
+il void add(int u, int v, int w, int f) {
+    e[tot].u = u, e[tot].v = v, e[tot].w = w, e[tot].f = f;
+    e[tot].next = head[u]; head[u] = tot++;
+}
+
+int h[N], dis[N], flow[N], pre[N];
+
+int n, m, s, t;
+
+int maxflow = 0, mincost = 0;
+il bool dijkstra() {
+    memset(dis, 0x3f, sizeof dis);
+    memset(flow, 0x3f, sizeof flow);
+    memset(pre, -1, sizeof pre);
+    
+    dis[s] = 0;
+    q.push(point(s, 0));
+    while (!q.empty()) {
+        int u = q.top().u, val = q.top().val;
+        q.pop();
+        if (val &gt; dis[u]) continue;
+        for (int i = head[u]; i != -1; i = e[i].next) {
+            int v = e[i].v;
+            if (e[i].w and dis[v] &gt; dis[u] + e[i].f + h[u] - h[v]) {
+                pre[v] = i;
+                flow[v] = min(flow[u], e[i].w);
+                dis[v] = dis[u] + e[i].f + h[u] - h[v];
+                q.push(point(v, dis[v]));
+            }
+        }
+    }
+    return dis[t] != INF;
+}
+
+il void check() {
+    
+    for (int p = pre[t]; p != -1; p = pre[e[p].u]) {
+        e[p].w -= flow[t];
+        e[p^1].w += flow[t];
+    }
+    maxflow += flow[t];
+    mincost += (dis[t] - h[s] + h[t]) * flow[t];
+    
+    for(int i=1; i&lt;=n; ++i) h[i] += dis[i];
+}
+
+
+int main() {
+    
+    freopen(&quot;p3381.in&quot;, &quot;r&quot;, stdin);
+    
+    memset(head, -1, sizeof head);
+    
+    scanf(&quot;%d%d%d%d&quot;, &amp;n, &amp;m, &amp;s, &amp;t);
+    for(int i=1, u, v, w, f; i&lt;=m; ++i) {
+        scanf(&quot;%d%d%d%d&quot;, &amp;u, &amp;v, &amp;w, &amp;f);
+        add(u, v, w, f);
+        add(v, u, 0, -f);
+    }
+    
+    while (dijkstra()) check();
+    printf(&quot;%d %d\n&quot;, maxflow, mincost);
+    
+    return 0;
+}
+</code></pre>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://www.atsnow.tk/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#网络流</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#最短路</a>
+    
+    <a href="https://www.atsnow.tk/tags/%E7%AE%97%E6%B3%95/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#算法</a>
+    
+</div>
+        
+        
+        
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">上一页</span>
+        <a href="https://www.atsnow.tk/num-theory/" class="block">简单数论</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">下一页</span>
+        <a href="https://www.atsnow.tk/maximum-flow/" class="block">网络流：最大流</a>
+        
+    </div>
+</div>
+
+        
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#最短路">最短路</a></li>
+    <li><a href="#势函数">势函数</a>
+      <ul>
+        <li><a href="#初值">初值</a></li>
+        <li><a href="#维护">维护</a></li>
+      </ul>
+    </li>
+    <li><a href="#p3381-模板最小费用最大流">P3381 ［模板］最小费用最大流</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">相关</h2>
+        <div class="content">
+            
+            <a href="https://www.atsnow.tk/network-flow-template/">网络流：模板</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/network-flow-deloop/">网络流：消圈算法</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/graph-theory/">图论</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/maximum-flow/">网络流：最大流</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/minimum-cut/">网络流：最小割</a>
+            <br />
+            
+            <a href="https://www.atsnow.tk/ruler-method/">尺取法</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">C. Wang</a> and <a href="https://www.ruiqima.com/">R. Ma</a> &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>
